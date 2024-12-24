@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Hotel</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      background-color: #f4f4f4;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #2c2c2c;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+      animation: flicker 3s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+      }
+      20%, 24%, 55% {
+        opacity: 0.5;
+      }
+    }
+
+    main {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .room-details {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+
+    .room {
+      width: 30%;
+      background-color: #e8e8e8;
+      padding: 20px;
+      border: 2px solid #bbb;
+      border-radius: 10px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .room:hover {
+      transform: scale(1.05);
+      background-color: #ccc;
+    }
+
+    .room h2 {
+      margin-top: 0;
+    }
+
+    footer {
+      background-color: #2c2c2c;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .fun-text {
+      position: fixed;
+      bottom: 10%;
+      right: 10%;
+      font-size: 1.5em;
+      color: rgba(0, 0, 0, 0.2);
+      transform: rotate(-10deg);
+      animation: moveText 10s infinite;
+    }
+
+    @keyframes moveText {
+      0%, 100% {
+        transform: translateX(0) rotate(-10deg);
+      }
+      50% {
+        transform: translateX(-10px) rotate(-10deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>En. Hotel</h1>
+    <p>Your sycophant escape awaits...</p>
+  </header>
+  <main>
+    <section>
+      <h2>Welcome</h2>
+      <p>Experience the once in a life time sight of our onyx trees</p>
+    </section>
+    <section class="room-details">
+      <div class="room">
+        <h2>Formicidae Room</h2>
+        <p>Comfortable, cozy, and perfect for a peaceful life.</p>
+        <button onclick="bookRoom('Ant Room')">Book Now</button>
+      </div>
+      <div class="room">
+        <h2>Lepidoptera Room</h2>
+        <p>Spacious and luxurious.</p>
+        <button onclick="bookRoom('Moth Room')">Book Now</button>
+      </div>
+      <div class="room">
+        <h2>The Homo sapien Suite</h2>
+        <p>A one-of-a-kind experience</p>
+        <!-- Link to the Human Suite page -->
+        <button onclick="window.location.href='human-suite.html'">Book Now</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="fun-text">Control your excitement</div>
+
+  <footer>
+    &copy; En. All Rights Reserved. <!-- Supported and funded by Happy Campers Co. -->
+  </footer>
+
+  <!-- Background sound -->
+  <audio id="background-sound" loop>
+    <source src="Level 5 Terror Hotel.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    // Start background sound
+    const backgroundSound = document.getElementById('background-sound');
+    backgroundSound.play().catch(error => {
+      console.log('Background sound autoplay failed. Waiting for user interaction.');
+    });
+
+    // Room booking function (for Ant Room and Moth Room)
+    function bookRoom(roomType) {
+      alert(`You have chosen to book the ${roomType}. An agent will help you shortly... Await an email`);
+    }
+
+    // Trigger background sound on user interaction
+    document.body.addEventListener('click', () => {
+      backgroundSound.play();
+    });
+  </script>
+</body>
+</html>

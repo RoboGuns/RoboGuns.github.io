@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hub</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column; /* Stack elements vertically */
+      justify-content: center; /* Center items vertically */
+      align-items: center; /* Center items horizontally */
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      position: relative; /* Make sure that absolute positioning works */
+    }
+    img {
+      width: 300px;
+      height: auto; 
+    }
+    .directions-bar {
+      margin-top: 20px; /* Add space below the image */
+      padding: 10px 20px;
+      background-color: #222; /* Dark background for the bar */
+      color: #fff; /* White text for contrast */
+      border-radius: 5px; /* Rounded corners for the bar */
+      font-size: 16px; /* Adjust font size */
+    }
+    .directions-bar a {
+      color: #597BE5; /* Green link color */
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .directions-bar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Styling for the "Start Music" Button */
+    #start-music {
+      position: absolute; /* Position the button absolutely */
+      top: 20px; /* Distance from the top of the screen */
+      right: 20px; /* Distance from the right of the screen */
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #start-music:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <img src="Untitled design.png" alt="Centered Image">
+  <div class="directions-bar">
+    <a href="Help.html">Help I don't know why I'm here</a>
+  </div>
+  
+  <!-- Start Music Button -->
+  <button id="start-music">Start Music</button>
+  
+  <!-- Audio Player -->
+  <audio id="background-music" loop>
+    <source src="space6.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const audio = document.getElementById('background-music');
+    const startMusicButton = document.getElementById('start-music');
+
+    // Play the music when the "Start Music" button is clicked
+    startMusicButton.addEventListener('click', () => {
+      audio.play().catch(error => {
+        console.log('Audio playback failed:', error);
+      });
+      startMusicButton.disabled = true; // Disable the button once clicked
+      startMusicButton.textContent = 'Music Playing...'; // Change button text
+    });
+  </script>
+</body>
+</html>
