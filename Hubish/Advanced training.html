@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login TAC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    #loginContainer, #trainingContent {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    p.error {
+      color: red;
+      text-align: center;
+      margin: 0;
+    }
+
+    #trainingContent p {
+      text-align: center;
+    }
+	   #start-music {
+      position: absolute; 
+      top: 20px; 
+      right: 20px; 
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #start-music:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+	
+  <button id="start-music">Start Music</button>
+  
+
+  <audio id="background-music" loop>
+    <source src="audio/Twin Palms.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <div id="loginContainer">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <label for="password">Enter Password:</label>
+      <input type="password" id="password" required>
+      <button type="submit">Login</button>
+      <p class="error" id="errorMessage" style="display: none;">Invalid username or password. Please try again.</p>
+    </form>
+  </div>
+
+   <script>
+  const validPasswordHash = "2cd2806e916fbfd23d02031e924e8e584e5fafdc8c2a8797a420a1ef069a187e";
+  const trainingSiteURLObfuscated = "b3BlbmdhdGUuaHRtbA=="; 
+
+  function decodeURL(encoded) {
+    return atob(encoded);
+  }
+
+  async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+  }
+
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const enteredPassword = document.getElementById('password').value;
+
+    // Hash the entered password
+    const enteredPasswordHash = await hashPassword(enteredPassword);
+
+    if (enteredPasswordHash === validPasswordHash) {
+      // Redirect using the decoded URL
+      const trainingSiteURL = decodeURL(trainingSiteURLObfuscated);
+      window.location.href = trainingSiteURL;
+    } else {
+      document.getElementById('errorMessage').style.display = "block";
+    }
+  });
+	   
+    const audio = document.getElementById('background-music');
+    const startMusicButton = document.getElementById('start-music');
+
+    
+    startMusicButton.addEventListener('click', () => {
+      audio.play().catch(error => {
+        console.log('Audio playback failed:', error);
+      });
+      startMusicButton.disabled = true; 
+      startMusicButton.textContent = 'Music Playing...'; 
+    });
+</script>
+
+</body>
+</html>

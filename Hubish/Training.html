@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Anomalies Training Manual</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 2em;
+      position: relative;
+    }
+
+    .logo {
+      position: absolute;
+      left: 10px;
+      top: 2px;
+      width: 70px;
+      height: 70px;
+      background-image: url('Imagery/TAC.png'); 
+      background-size: contain; 
+      background-repeat: no-repeat; 
+      background-position: center; 
+    }
+
+    #start-music{
+      position: absolute;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #start-music {
+      top: 20px;
+      right: 20px;
+    }
+    #start-music:hover {
+      background-color: #45a049;
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-top: 0;
+    }
+
+    .content-section {
+      margin-bottom: 40px;
+    }
+
+    .content-section p {
+      line-height: 1.6;
+    }
+
+    .content-section ul {
+      list-style-type: square;
+      margin-left: 20px;
+    }
+
+    .content-section a {
+      color: #3498db;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .btn {
+      background-color: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background-color: #2980b9;
+    }
+
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+#commentForm {
+  margin-top: 20px;
+}
+
+#commentForm label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+#commentForm input, 
+#commentForm textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#commentsContainer {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.comment {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.comment h4 {
+  margin: 0 0 5px;
+  font-size: 1.2em;
+  color: #2c3e50;
+}
+
+.comment p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo"></div> <!-- Logo here -->
+    Time Anomalies Training Manual
+    <!-- Play Music Button -->
+    <button class="btn" id="playMusicBtn">Play Music</button>
+  </header>
+
+  <div class="container">
+    <!-- Back to Hub Button -->
+    <button class="btn" onclick="window.location.href='index.html'">Back to Hub</button>
+
+    <!-- Introduction Section -->
+    <section class="content-section" id="introduction">
+      <h2>Introduction to Time Anomalies</h2>
+      <p>
+        Welcome to the Time Anomalies Training Manual. This guide will help you understand the nature of time anomalies, how to identify them, and the procedures for managing them effectively. Time anomalies are unpredictable and often dangerous phenomena that can distort the fabric of time. It is important as a soldier to maintain client sanity and pull them out of their event.
+      </p>
+    </section>
+
+    <!-- Understanding Time Anomalies Section -->
+    <section class="content-section" id="understanding-anomalies">
+      <h2>Understanding Time Anomalies</h2>
+      <p>Time anomalies can manifest in various forms, including:</p>
+      <ul>
+        <li><strong>Time Loops:</strong> A client experiences repeated events or periods of time that seem to loop.</li>
+        <li><strong>Temporal Immunity:</strong> A client becomes unable to perish due to anything other than old age, causing major warps in time.</li>
+        <li><strong>Temporal Distortions:</strong> Some clients become unable to understand basic knowledge and must undergo treatment.</li>
+      </ul>
+    </section>
+
+    <!-- Response Protocols Section -->
+    <section class="content-section" id="response-protocols">
+      <h2>Response Protocols</h2>
+      <p>
+        It is essential to follow a structured protocol when encountering a time anomaly. Below are the key steps to follow:
+      </p>
+      <ul>
+        <li><strong>Step 1:</strong> Identify the nature of the anomaly (loop, immunity, other).</li>
+        <li><strong>Step 2:</strong> Secure the point in time.</li>
+        <li><strong>Step 3:</strong> Report the anomaly to TAC higher-ups immediately.</li>
+        <li><strong>Step 4:</strong> Follow instructions from the TAC team for neutralizing or containing the anomaly.</li>
+        <li><strong>Step 5:</strong> Don't step out of line.</li>
+      </ul>
+
+      <button class="btn" onclick="location.href='#advanced-training'">Go to Advanced Training</button>
+    </section>
+
+  </div>
+  <footer>
+    &copy; <strong>300000BC - █████AC</strong> TAC. All rights reserved.
+  </footer>
+<div class="container">
+  <!-- Comment Section -->
+  <section class="content-section" id="comment-section">
+    <h2>Public Comments</h2>
+    <form id="commentForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required placeholder="Enter your name">
+      <br>
+      <label for="comment">Comment:</label>
+      <textarea id="comment" name="comment" required placeholder="Write your comment"></textarea>
+      <br>
+      <button type="submit" class="btn">Submit Comment</button>
+    </form>
+    <h3>Comments:</h3>
+    <div id="commentsContainer">
+      <div class="comment">
+		<h4>David</h4>
+		  <p>As a member of this company for eons, I can't proudly speak of it's security. If you are seriously considering joining I wish you much luck, the IT department still
+		  hasn't changed their weak security measures and I've had much harrasment gaining access to my email... I wonder if the IT department even exists, these creeps somehow placed my pass into a photo seriously what the loil.</p>
+		</div>
+    </div>
+  </section>
+</div>
+
+  <audio id="backgroundMusic" src="sowng.mp3" loop></audio>
+<script>
+  const musicBtn = document.getElementById('playMusicBtn');
+  const backgroundMusic = document.getElementById('backgroundMusic');
+
+  let isPlaying = false;
+
+  musicBtn.addEventListener('click', () => {
+    try {
+      if (isPlaying) {
+        backgroundMusic.pause();
+        musicBtn.textContent = 'Play Music';
+      } else {
+        backgroundMusic.play().catch((error) => {
+          console.error('Audio playback error:', error);
+          alert('Failed to play audio. Ensure the file exists and is properly linked.');
+        });
+        musicBtn.textContent = 'Pause Music';
+      }
+      isPlaying = !isPlaying;
+    } catch (error) {
+      console.error('Error handling audio:', error);
+    }
+  });
+	
+</script>
+<script>
+  const commentForm = document.getElementById('commentForm');
+  const commentsContainer = document.getElementById('commentsContainer');
+
+  commentForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent form submission from refreshing the page
+
+    const name = document.getElementById('name').value.trim();
+    const comment = document.getElementById('comment').value.trim();
+
+    if (name && comment) {
+      // Create a new comment element
+      const commentDiv = document.createElement('div');
+      commentDiv.classList.add('comment');
+
+      const commentHeader = document.createElement('h4');
+      commentHeader.textContent = name;
+
+      const commentBody = document.createElement('p');
+      commentBody.textContent = comment;
+
+      commentDiv.appendChild(commentHeader);
+      commentDiv.appendChild(commentBody);
+
+      // Add the new comment to the comments container
+      commentsContainer.appendChild(commentDiv);
+
+      // Clear the form
+      commentForm.reset();
+    } else {
+      alert('Please fill out both fields before submitting.');
+    }
+  });
+</script>
+
+
+</body>
+</html>
