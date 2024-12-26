@@ -58,31 +58,25 @@
   </style>
 </head>
 <body>
-  <img src="Imagery/Untitled design.png">
+  <img src="/Hubish/Imagery/Untitled design.png">
   <div class="directions-bar">
     <a href="Hubish/Help.html">Help</a>
   </div>
-  
-  <!-- Start Music Button -->
   <button id="start-music">Start Music</button>
-  
-  <!-- Audio Player -->
   <audio id="background-music" loop>
-    <source src="space6.mp3" type="audio/mpeg">
+    <source src="/Hubish/Audio/space6.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
-
   <script>
     const audio = document.getElementById('background-music');
     const startMusicButton = document.getElementById('start-music');
 
-    // Play the music when the "Start Music" button is clicked
     startMusicButton.addEventListener('click', () => {
       audio.play().catch(error => {
         console.log('Audio playback failed:', error);
       });
-      startMusicButton.disabled = true; // Disable the button once clicked
-      startMusicButton.textContent = 'Music Playing...'; // Change button text
+      startMusicButton.disabled = true; 
+      startMusicButton.textContent = 'Music Playing...';
     });
   </script>
 </body>

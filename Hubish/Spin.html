@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated List</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #2e3537;
+      color: white;
+      font-family: 'Arial', sans-serif;
+    }
+
+    ul {
+      list-style: none;
+      height: 100vh;
+      max-height: 800px;
+      min-height: 400px;
+      overflow: hidden;
+      text-align: center;
+      perspective: 900px;
+    }
+
+    li {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      font-size: 23px;
+      font-weight: bold;
+      transform: translateY(100vh);
+      animation: animate 5s linear infinite;
+    }
+
+    @keyframes animate {
+      0% {
+        transform: rotateY(90deg) translateY(105vh) rotate(0deg);
+      }
+      50% {
+        transform: rotateY(0deg) translateY(50vh) rotate(0deg);
+      }
+      100% {
+        transform: rotateY(-90deg) translateY(-5vh) rotate(0deg);
+      }
+    }
+
+    li:nth-child(1) {
+      animation-delay: 0.3s;
+      right: 1rem;
+    }
+    li:nth-last-child(1) {
+      right: 1rem;
+    }
+    li:nth-child(2) {
+      animation-delay: 0.6s;
+      right: 2rem;
+    }
+    li:nth-last-child(2) {
+      right: 2rem;
+    }
+    li:nth-child(3) {
+      animation-delay: 1s;
+      right: 3rem;
+    }
+    li:nth-last-child(3) {
+      right: 3rem;
+    }
+    li:nth-child(4) {
+      animation-delay: 1.3s;
+      right: 4rem;
+    }
+    li:nth-last-child(4) {
+      right: 4rem;
+    }
+    li:nth-child(5) {
+      animation-delay: 1.6s;
+      right: 5rem;
+    }
+    li:nth-last-child(5) {
+      right: 5rem;
+    }
+    li:nth-child(6) {
+      animation-delay: 2s;
+      right: 6rem;
+    }
+    li:nth-last-child(6) {
+      right: 6rem;
+    }
+    li:nth-child(7) {
+      animation-delay: 2.3s;
+      right: 7rem;
+    }
+    li:nth-last-child(7) {
+      right: 7rem;
+    }
+    li:nth-child(8) {
+      animation-delay: 2.6s;
+      right: 8rem;
+    }
+    li:nth-last-child(8) {
+      right: 8rem;
+    }
+    li:nth-child(9) {
+      animation-delay: 3s;
+    }
+    li:nth-child(10) {
+      animation-delay: 3.3s;
+    }
+    li:nth-child(11) {
+      animation-delay: 3.6s;
+    }
+    li:nth-child(12) {
+      animation-delay: 4s;
+    }
+    li:nth-child(13) {
+      animation-delay: 4.3s;
+    }
+    li:nth-child(14) {
+      animation-delay: 4.6s;
+    }
+    li:nth-child(15) {
+      animation-delay: 5s;
+    }
+    #start-music {
+      position: absolute; 
+      top: 20px; 
+      right: 20px; 
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #start-music:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>Ophiocordyceps umbraecontagia, oh how I hate you.</li>
+    <li>Your extinction would be my zenith, the moment I find peace.</li>
+    <li>You've taken everything from this world, leaving nothing but ruin in your wake.</li>
+    <li>Simply fucking with time wasn't enough for you, was it?</li>
+    <li>I fear that one day you may take my family, as you have taken so much else.</li>
+    <li>Once I find out how the hell you're capable of it,</li>
+    <li>Although in your eyes, you see yourself as invincible, untouchable,</li>
+    <li>I swear that I'll be the one to destory you,</li>
+    <li>reinventing life to a much more powerful version of itself,</li>
+    <li>When the time comes, I hope you burn in hell, for what you've done to this world.</li>
+    <li>It never ends</li>
+    <li>It will never end</li>
+    <li>The same day</li>
+    <!-- Add the anchor link with onclick event -->
+    <li><a href="#" onclick="redirectTo('dHJhaW5pbmcuaHRtbA==')">The same day</a></li>
+    <li>anything to make it end</li>
+  </ul>
+  <audio id="background-music" loop>
+    <source src="/Hubish/Audio/world is falling apart, i'll watch.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <script>
+    const audio = document.getElementById('background-music');
+    const startMusicButton = document.getElementById('start-music');
+
+    startMusicButton.addEventListener('click', () => {
+      audio.play().catch(error => {
+        console.log('Audio playback failed:', error);
+      });
+      startMusicButton.disabled = true; 
+      startMusicButton.textContent = 'Music Playing...';
+    });
+  </script>
+  <script>
+    function redirectTo(encodedUrl) {
+      // Decode the base64-encoded URL
+      const decodedUrl = atob(encodedUrl);
+      // Redirect to the decoded URL
+      window.location.href = decodedUrl;
+    }
+  </script>
+</body>
+</html>
