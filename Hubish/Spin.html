@@ -154,8 +154,7 @@
     <li>It never ends</li>
     <li>It will never end</li>
     <li>The same day</li>
-    <!-- Add the anchor link with onclick event -->
-    <li><a href="#" onclick="redirectTo('dHJhaW5pbmcuaHRtbA==')">The same day</a></li>
+    <li><a href="#" onclick="redirectTo('VHJhaW5pbmcuaHRtbA==')">The same day</a></li>
     <li>anything to make it end</li>
   </ul>
   <button id="start-music">Start Music</button>
@@ -177,9 +176,7 @@
   </script>
   <script>
     function redirectTo(encodedUrl) {
-      // Decode the base64-encoded URL
       const decodedUrl = atob(encodedUrl);
-      // Redirect to the decoded URL
       window.location.href = decodedUrl;
     }
   </script>

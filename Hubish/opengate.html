@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Time Anomalies Training</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #2c3e50;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin: 0;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+      text-align: center;
+    }
+
+    .sidebar button {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      background-color: #1abc9c;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar button:hover {
+      background-color: #16a085;
+    }
+
+    .content-area {
+      flex-grow: 1;
+      padding: 20px;
+      background-color: #ecf0f1;
+      overflow-y: auto;
+    }
+
+    .content-area h1 {
+      color: #2c3e50;
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .content-area p {
+      line-height: 1.6;
+      color: #2c3e50;
+    }
+
+    .content-area .topic {
+      padding: 15px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #2c3e50;
+      color: white;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Training Menu</h2>
+    <button onclick="showContent('introduction')">Introduction</button>
+    <button onclick="showContent('time_loops')">Time Loops</button>
+    <button onclick="showContent('temporal_immunity')">Temporal Immunity</button>
+    <button onclick="showContent('temporal_distortions')">Temporal Distortions</button>
+    <button onclick="showContent('faq')">FAQ</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <div class="content-area">
+    <div id="introduction" class="topic">
+      <h1>Welcome to Advanced Training</h1>
+      <p>
+        This module will guide you through advanced training on time anomalies. Please select a topic from the menu to begin your training.
+      </p>
+    </div>
+
+    <div id="time_loops" class="topic" style="display: none;">
+      <h1>Time Loops</h1>
+      <p>
+        Time loops are anomalies where a sequence of events repeats endlessly. Understanding the cause and the nature of a loop is crucial to resolve it.
+      </p>
+      <ul>
+        <li>Repetition of events within a fixed period.</li>
+        <li>Memory retention by some individuals within the loop.</li>
+        <li>Potential to alter the sequence with interventions.</li>
+      </ul>
+    </div>
+
+    <div id="temporal_immunity" class="topic" style="display: none;">
+      <h1>Temporal Immunity</h1>
+      <p>
+        Temporal immunity occurs when individuals become impervious to physical harm or changes in their timeline. This can cause disruptions and paradoxes.
+      </p>
+      <h3>Resolution Protocol:</h3>
+      <ol>
+        <li>Identify the source of immunity.</li>
+        <li>Isolate the individual from other time anomalies.</li>
+        <li>Use specialized equipment to neutralize immunity.</li>
+      </ol>
+    </div>
+
+    <div id="temporal_distortions" class="topic" style="display: none;">
+      <h1>Temporal Distortions</h1>
+      <p>
+        Temporal distortions involve anomalies where individuals or environments behave unpredictably, often losing coherence with the timeline.
+      </p>
+      <h3>Key Indicators:</h3>
+      <ul>
+        <li>Erratic memory loss or gain.</li>
+        <li>Environmental inconsistencies.</li>
+        <li>Unusual shifts in time perception.</li>
+      </ul>
+    </div>
+
+    <div id="faq" class="topic" style="display: none;">
+      <h1>Frequently Asked Questions</h1>
+      <p>
+        <strong>Q:</strong> What should I do if I encounter a new anomaly?<br>
+        <strong>A:</strong> Report it immediately to your supervisor and document all observable effects.
+      </p>
+      <p>
+        <strong>Q:</strong> Can anomalies affect equipment?<br>
+        <strong>A:</strong> Yes, ensure all devices are shielded from temporal interference.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 300000BC - █████AC TAC. All rights reserved.
+  </footer>
+
+  <script>
+    function showContent(topicId) {
+      const topics = document.querySelectorAll('.topic');
+      topics.forEach(topic => topic.style.display = 'none');
+      document.getElementById(topicId).style.display = 'block';
+    }
+
+    function logout() {
+      alert('You have been logged out.');
+      window.location.href = 'Advanced training.html'; 
+    }
+  </script>
+</body>
+</html>

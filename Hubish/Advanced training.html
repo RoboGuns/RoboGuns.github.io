@@ -129,11 +129,9 @@
     e.preventDefault();
     const enteredPassword = document.getElementById('password').value;
 
-    // Hash the entered password
     const enteredPasswordHash = await hashPassword(enteredPassword);
 
     if (enteredPasswordHash === validPasswordHash) {
-      // Redirect using the decoded URL
       const trainingSiteURL = decodeURL(trainingSiteURLObfuscated);
       window.location.href = trainingSiteURL;
     } else {
