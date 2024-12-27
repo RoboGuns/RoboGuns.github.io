@@ -77,20 +77,22 @@
     }
 
     .btn {
-      background-color: #3498db;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-align: center;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-top: 10px;
-      display: inline-block;
-    }
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  display: inline-block; 
+  text-decoration: none; 
+}
 
-    .btn:hover {
-      background-color: #2980b9;
-    }
+.btn:hover {
+  background-color: #2980b9;
+}
+
 
     footer {
       background-color: #2c3e50;
@@ -157,7 +159,7 @@
 
   <div class="container">
     <!-- Back to Hub Button -->
-    <button class="btn" onclick="window.location.href='index.html'">Back to Hub</button>
+    <button class="btn" onclick="window.location.href='../index.html'">Back to Hub</button>
 
     <!-- Introduction Section -->
     <section class="content-section" id="introduction">
@@ -179,21 +181,23 @@
     </section>
 
     <!-- Response Protocols Section -->
-    <section class="content-section" id="response-protocols">
-      <h2>Response Protocols</h2>
-      <p>
-        It is essential to follow a structured protocol when encountering a time anomaly. Below are the key steps to follow:
-      </p>
-      <ul>
-        <li><strong>Step 1:</strong> Identify the nature of the anomaly (loop, immunity, other).</li>
-        <li><strong>Step 2:</strong> Secure the point in time.</li>
-        <li><strong>Step 3:</strong> Report the anomaly to TAC higher-ups immediately.</li>
-        <li><strong>Step 4:</strong> Follow instructions from the TAC team for neutralizing or containing the anomaly.</li>
-        <li><strong>Step 5:</strong> Don't step out of line.</li>
-      </ul>
+    <!-- Updated Section with a styled <a> link inside a button -->
+<section class="content-section" id="response-protocols">
+  <h2>Response Protocols</h2>
+  <p>
+    It is essential to follow a structured protocol when encountering a time anomaly. Below are the key steps to follow:
+  </p>
+  <ul>
+    <li><strong>Step 1:</strong> Identify the nature of the anomaly (loop, immunity, other).</li>
+    <li><strong>Step 2:</strong> Secure the point in time.</li>
+    <li><strong>Step 3:</strong> Report the anomaly to TAC higher-ups immediately.</li>
+    <li><strong>Step 4:</strong> Follow instructions from the TAC team for neutralizing or containing the anomaly.</li>
+    <li><strong>Step 5:</strong> Don't step out of line.</li>
+  </ul>
 
-      <button class="btn" onclick="location.href='#advanced-training'">Go to Advanced Training</button>
-    </section>
+  <button class="btn" onclick="window.location.href='Advanced training.html'">Advanced Training</button>
+</section>
+
 
   </div>
   <footer>
@@ -223,7 +227,7 @@
   </section>
 </div>
 
-  <audio id="backgroundMusic" src="sowng.mp3" loop></audio>
+  <audio id="backgroundMusic" src="Audio/sowng.mp3" loop></audio>
 <script>
   const musicBtn = document.getElementById('playMusicBtn');
   const backgroundMusic = document.getElementById('backgroundMusic');
@@ -254,13 +258,12 @@
   const commentsContainer = document.getElementById('commentsContainer');
 
   commentForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Prevent form submission from refreshing the page
+    e.preventDefault(); 
 
     const name = document.getElementById('name').value.trim();
     const comment = document.getElementById('comment').value.trim();
 
     if (name && comment) {
-      // Create a new comment element
       const commentDiv = document.createElement('div');
       commentDiv.classList.add('comment');
 
@@ -273,10 +276,8 @@
       commentDiv.appendChild(commentHeader);
       commentDiv.appendChild(commentBody);
 
-      // Add the new comment to the comments container
       commentsContainer.appendChild(commentDiv);
 
-      // Clear the form
       commentForm.reset();
     } else {
       alert('Please fill out both fields before submitting.');
