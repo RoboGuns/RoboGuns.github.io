@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",  // This tells Render to start the server
-    "dev": "nodemon index.js"  // If you want a development script using nodemon
+    "start": "node index.js"
   },
   "dependencies": {
     "express": "^4.17.1"
