@@ -3,7 +3,7 @@ name: Deploy to Render
 on:
   push:
     branches:
-      - main  # or the branch you are using for production
+      - main  # Or the branch you're using for production
 
 jobs:
   deploy:
@@ -23,5 +23,5 @@ jobs:
 
       - name: Deploy to Render
         run: |
-          curl -X POST https://api.render.com/v1/services/<YOUR_RENDER_SERVICE_ID>/deploy \
-          -H "Authorization: Bearer <YOUR_RENDER_API_KEY>"
+          curl -X POST https://api.render.com/v1/services/srv-ctpiehtds78s73d3h5u0/deploy \
+          -H "Authorization: Bearer rnd_V7CEaKUO1IyBpH4tAUBlAglgs0wj"
