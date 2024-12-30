@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decryptor</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1c1c1c;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2em;
+      color: #4CAF50;
+    }
+
+    textarea {
+      width: 80%;
+      height: 100px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 16px;
+      color: #333;
+      background-color: #f4f4f4;
+      resize: none;
+    }
+
+    input[type="password"] {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .output {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+
+    .output.error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Decryptor</h1>
+  <textarea id="encryptedText" placeholder="Enter encrypted text here..."></textarea><br>
+  <input type="password" id="decryptPassword" placeholder="Enter password"><br>
+  <button onclick="decrypt()">Decrypt</button>
+  <div id="decryptOutput" class="output"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  <script>
+    function decrypt() {
+      const encryptedText = document.getElementById('encryptedText').value.trim();
+      const password = document.getElementById('decryptPassword').value.trim();
+      const outputDiv = document.getElementById('decryptOutput');
+  
+      outputDiv.textContent = "";
+  
+      if (!encryptedText || !password) {
+        outputDiv.textContent = "Please provide both the encrypted text and password.";
+        outputDiv.className = "output error";
+        return;
+      }
+  
+      try {
+        const bytes = CryptoJS.AES.decrypt(encryptedText, password);
+        const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+  
+        if (decryptedText) {
+          outputDiv.textContent = `Decrypted Text: ${decryptedText}`;
+          outputDiv.className = "output";
+        } else {
+          outputDiv.textContent = "Failed to decrypt. Ensure the text is Base64-encoded and the password is correct.";
+          outputDiv.className = "output error";
+        }
+      } catch (error) {
+        console.error("Decryption Error:", error);
+        outputDiv.textContent = "An error occurred during decryption. Password is most likely incorrect.";
+        outputDiv.className = "output error";
+      }
+    }
+  </script>
+</body>
+</html>

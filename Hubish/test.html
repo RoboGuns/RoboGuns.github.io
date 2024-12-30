@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Hive</title>
   <style>
-    /* Basic Styling */
     body {
       margin: 0;
       padding: 0;
@@ -14,7 +13,6 @@
       color: #fff;
     }
 
-    /* Header Styling */
     header {
       text-align: center;
       padding: 20px;
@@ -35,7 +33,6 @@
       margin: 5px 0;
     }
 
-    /* Faces Grid */
     .faces-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -54,7 +51,6 @@
       cursor: pointer;
     }
 
-    /* Images for Faces */
     .face img {
       width: 100%;
       height: 100%;
@@ -63,13 +59,11 @@
       transition: transform 0.5s ease, filter 0.5s ease;
     }
 
-    /* Hover Effect for Faces */
     .face:hover img {
-      transform: scale(1.2);
+      transform: scale(1.1);
       filter: grayscale(0%);
     }
 
-    /* Dissonant Face */
     .dissonant {
       border: 2px solid #ff0000;
     }
@@ -83,7 +77,6 @@
       }
     }
 
-    /* Hidden Message Styling */
     .hidden-message {
       display: none;
       text-align: center;
@@ -92,49 +85,82 @@
       color: #ffcc00;
     }
 
-    /* Footer Styling */
     footer {
       background-color: #1a1a1a;
       color: #666;
       text-align: center;
       padding: 10px;
     }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: #000000;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header>
     <h1>The Hive</h1>
-    <p>One face. One purpose. Join us.</p>
+    <p>All the same, we have become one.</p>
   </header>
 
-  <!-- Faces Grid -->
   <main>
     <div class="faces-grid" id="faces-grid">
-      <!-- Faces will be dynamically generated -->
     </div>
     <div class="hidden-message" id="hidden-message">
-      Woooow look at you so smart with computers.
     </div>
   </main>
 
-  <!-- Footer -->
   <footer>
     &copy; En. All Rights Reserved.
   </footer>
 
-  <!-- Audio Element -->
-  <audio id="dissonant-audio" src="Audio/sowng.mp3" preload="auto"></audio> <!-- Replace with the correct file path -->
+  <audio id="dissonant-audio" src="Audio/sowng.mp3" preload="auto"></audio>
 
-  <!-- JavaScript for Infinite Scroll -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>You found the perfected <a href="Spin.html">Foe!</a></p>
+    </div>
+  </div>
+
   <script>
-    // Ensure script runs after DOM is loaded
     document.addEventListener('DOMContentLoaded', function () {
       const grid = document.getElementById('faces-grid');
-      const normalFace = 'Normal.jpg'; // URL for the normal face image
-      const dissonantFace = 'Dissonant.jpg'; // URL for the "dissonant" face
+      const normalFace = 'Imagery/Normal.jpg';
+      const dissonantFace = 'Imagery/Dissonant.jpg';
 
-      // Function to generate faces
       function generateFaces(count = 20) {
         for (let i = 0; i < count; i++) {
           const face = document.createElement('div');
@@ -142,22 +168,21 @@
 
           const img = document.createElement('img');
 
-          // Add a dissonant face with a probability of 1/1000
-          if (Math.random() < 0.001) { // 1/1000 chance for dissonant face
+          if (Math.random() < 0.001) { 
             img.src = dissonantFace;
             face.classList.add('dissonant');
 
-            // Add behavior when clicking on a dissonant face
             face.addEventListener('click', () => {
-              console.log('Dissonant face clicked'); // Debugging log
-              // Display the hidden message
+              console.log('Dissonant face clicked'); 
               const message = document.getElementById('hidden-message');
               message.style.display = 'block';
 
-              // Play the dissonant audio
               const audio = document.getElementById('dissonant-audio');
               audio.play();
-              console.log('Playing audio'); // Debugging log
+              console.log('Playing audio'); 
+
+              const modal = document.getElementById('myModal');
+              modal.style.display = 'block';
             });
           } else {
             img.src = normalFace;
@@ -168,15 +193,27 @@
         }
       }
 
-      // Initial load of faces
       generateFaces(200);
 
-      // Infinite Scroll Handler
       window.addEventListener('scroll', () => {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
-          generateFaces(20); // Add 20 more faces when user scrolls near the bottom
+          generateFaces(20); 
         }
       });
+
+      const modal = document.getElementById('myModal');
+
+      const span = document.getElementsByClassName('close')[0];
+
+      span.onclick = function() {
+        modal.style.display = 'none';
+      }
+
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      }
     });
   </script>
 </body>
