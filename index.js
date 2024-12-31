@@ -1,7 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 3000;
+
+// Enable CORS for all origins (you can restrict it further if needed)
+app.use(cors());
 
 // Serve static files (HTML, CSS, JS) from the "Hubish" directory
 app.use(express.static('Hubish'));
