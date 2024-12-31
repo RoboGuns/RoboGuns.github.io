@@ -11,21 +11,6 @@ app.use(cors());
 // Serve static files (HTML, CSS, JS) from the "Hubish" directory
 app.use(express.static('Hubish'));
 
-// Serve the SEARCHH.html when the root URL is accessed
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Hubish', 'SEARCHH.html'));
-});
-
-// API route to handle the search
-app.get('/api/search', (req, res) => {
-  const query = req.query.q; // Get the search term from the query parameter
-  if (query.toLowerCase() === 'apple') {
-    res.json({ result: 'ryuk' });
-  } else {
-    res.json({ result: 'No match found' });
-  }
-});
-
 // ==================== Puzzle Functionality ====================
 
 // Session setup for tracking puzzle progress
@@ -47,6 +32,11 @@ app.get('/api/puzzle-sequence', (req, res) => {
   res.json({ sequence: puzzleSequence });
 });
 
+// API route to get a specific sequence (added the missing route)
+app.get('/api/get-sequence', (req, res) => {
+  const sequence = ['top-left', 'bottom-right', 'top-right', 'bottom-left'];
+  res.json({ sequence });
+});
 
 // API route to validate the user's sequence
 app.post('/api/validate-puzzle', (req, res) => {
@@ -83,6 +73,28 @@ app.get('/hidden.html', protectHiddenPage, (req, res) => {
 });
 
 // ==================== End of Puzzle Functionality ====================
+
+// Serve the SEARCHH.html when the root URL is accessed
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Hubish', 'SEARCHH.html'));
+});
+
+// API route to handle the search
+app.get('/api/search', (req, res) => {
+  const query = req.query.q; // Get the search term from the query parameter
+  if (query.toLowerCase() === 'apple') {
+    res.json({ result: 'ryuk' });
+  } else {
+    res.json({ result: 'No match found' });
+  }
+});
+
+// ==================== Wildcard Route ====================
+// This is where the fix needs to go. If you're using a wildcard route, make sure it doesn't conflict with API routes.
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) return next(); // Allow API routes to pass through
+  res.sendFile(path.join(__dirname, 'Hubish', 'SEARCHH.html'));
+});
 
 // Start the server
 app.listen(port, () => {
