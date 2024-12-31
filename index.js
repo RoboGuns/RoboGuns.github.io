@@ -35,33 +35,22 @@ const correctSequence = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
 
 // API route to get the puzzle sequence
 app.get('/api/puzzle-sequence', (req, res) => {
-  const puzzleSequence = ['top-left', 'bottom-right', 'top-right', 'bottom-left'];
-  res.json({ sequence: puzzleSequence });
+  res.json({ sequence: correctSequence });
 });
 
 // API route to get a specific sequence (added the missing route)
 app.get('/api/get-sequence', (req, res) => {
-  const sequence = ['top-left', 'bottom-right', 'top-right', 'bottom-left'];
-  res.json({ sequence });
+  res.json({ sequence: correctSequence });
 });
 
 // API route to validate the user's sequence
-app.post('/api/validate-puzzle', (req, res) => {
-  const { userSequence } = req.body; // Expected user sequence from the client.
-  const correctSequence = ['top-left', 'bottom-right', 'top-right', 'bottom-left'];
-
+app.post('/api/validate-sequence', (req, res) => {
+  const userSequence = req.body.sequence;
   if (JSON.stringify(userSequence) === JSON.stringify(correctSequence)) {
+    req.session.solvedPuzzle = true;
     res.json({ success: true });
   } else {
     res.json({ success: false });
-  }
-  // Check if the sequence matches
-  const isCorrect = JSON.stringify(userSequence) === JSON.stringify(correctSequence);
-  if (isCorrect) {
-    req.session.solvedPuzzle = true; // Mark the puzzle as solved in the session
-    return res.json({ success: true, redirectUrl: '/hidden.html' });
-  } else {
-    return res.json({ success: false, message: 'Incorrect sequence. Try again.' });
   }
 });
 
