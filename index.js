@@ -5,11 +5,18 @@ const app = express();
 const path = require('path');
 const port = process.env.PORT || 3000;
 
-// Enable CORS for all origins
-app.use(cors());
+// Enable CORS for the front-end domain (replace 'https://roboguns.github.io' with your actual front-end domain)
+app.use(cors({
+  origin: 'https://roboguns.github.io',  // Replace with your actual front-end domain
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}));
 
 // Serve static files (HTML, CSS, JS) from the "Hubish" directory
 app.use(express.static('Hubish'));
+
+// Parse incoming JSON requests
+app.use(express.json());  // This is necessary for parsing POST requests with JSON bodies
 
 // ==================== Puzzle Functionality ====================
 
@@ -89,7 +96,7 @@ app.get('/api/search', (req, res) => {
   }
 });
 
-// ==================== Wildcard Route ====================
+// ==================== Wildcard Route Fix ====================
 // This is where the fix needs to go. If you're using a wildcard route, make sure it doesn't conflict with API routes.
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api')) return next(); // Allow API routes to pass through
