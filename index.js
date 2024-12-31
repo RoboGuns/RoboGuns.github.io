@@ -31,7 +31,7 @@ app.use(
 );
 
 // Define the correct sequence for the puzzle
-const correctSequence = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+const correctSequence = ['top-left', 'bottom-right', 'top-right', 'bottom-left'];
 
 // API route to get the puzzle sequence
 app.get('/api/puzzle-sequence', (req, res) => {
