@@ -48,9 +48,19 @@
   </div>
 
   <script>
-    // Placeholder order for unlocking the page
-    const correctOrder = [1, 3, 2, 4]; // To be replaced with your actual order
     let clickedOrder = [];
+    let correctOrder = [];
+
+    // Fetch the puzzle sequence from the backend
+    fetch('/api/get-sequence')
+      .then(response => response.json())
+      .then(data => {
+        correctOrder = data.sequence; // Dynamically load the correct sequence
+      })
+      .catch(error => {
+        console.error("Failed to fetch sequence:", error);
+        alert("Error loading puzzle. Please try again later.");
+      });
 
     const triangles = document.querySelectorAll(".triangle");
 
@@ -63,12 +73,32 @@
         // Check if the clicked order matches the correct order
         if (clickedOrder.length === correctOrder.length) {
           if (JSON.stringify(clickedOrder) === JSON.stringify(correctOrder)) {
-            alert("Correct sequence! Unlocking the hidden webpage...");
-            window.location.href = "hidden.html"; // Redirect to the hidden page
+            // If correct, validate with the backend and redirect
+            fetch('/api/validate-sequence', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ sequence: clickedOrder })
+            })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  // Redirect to hidden page provided by the backend
+                  window.location.href = data.redirectURL;
+                } else {
+                  alert("Validation failed. Try again.");
+                  clickedOrder = [];
+                }
+              })
+              .catch(error => {
+                console.error("Validation error:", error);
+                alert("Error validating sequence. Please try again later.");
+              });
           } else {
             alert("Wrong sequence. Try again.");
+            clickedOrder = [];
           }
-          clickedOrder = []; // Reset for the next attempt
         }
       });
     });
