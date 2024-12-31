@@ -13,73 +13,94 @@
       align-items: center;
       background-color: #f0f0f0;
     }
-
     .puzzle-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, 100px);
+      grid-template-rows: repeat(2, 100px);
+      gap: 10px;
     }
-
     .triangle {
-      width: 0;
-      height: 0;
-      border-left: 30px solid transparent;
-      border-right: 30px solid transparent;
-      border-bottom: 50px solid blue;
-      margin: 20px;
+      width: 100px;
+      height: 100px;
+      background-color: #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
     }
-
-    .top-left { transform: rotate(180deg); }
-    .top-right { transform: rotate(270deg); }
-    .bottom-left { transform: rotate(90deg); }
-    .bottom-right { transform: rotate(0deg); }
+    .top-left { grid-area: 1 / 1; }
+    .top-right { grid-area: 1 / 2; }
+    .bottom-left { grid-area: 2 / 1; }
+    .bottom-right { grid-area: 2 / 2; }
   </style>
 </head>
 <body>
-  <div id="puzzle-container">
-    <h1>Puzzle Test</h1>
-    <div id="puzzle-sequence"></div>
-    <button id="validate-sequence">Validate Sequence</button>
-    <div id="result"></div>
+  <h1>Puzzle Test</h1>
+  <div id="puzzle-sequence"></div>
+  <div class="puzzle-container">
+    <div class="triangle top-left" data-order="top-left"></div>
+    <div class="triangle top-right" data-order="top-right"></div>
+    <div class="triangle bottom-left" data-order="bottom-left"></div>
+    <div class="triangle bottom-right" data-order="bottom-right"></div>
   </div>
-  <script>
-    const correctSequence = ['top-left', 'bottom-right', 'top-right', 'bottom-left'];
+  <div id="result"></div>
 
-    // Fetch the puzzle sequence from the server
+  <script>
+    let clickedOrder = [];
+    let correctOrder = [];
+
+    // Fetch the puzzle sequence from the backend
     fetch('https://roboguns-github-io.onrender.com/api/get-sequence')
       .then(response => response.json())
       .then(data => {
+        correctOrder = data.sequence; // Dynamically load the correct sequence
         const sequenceDiv = document.getElementById('puzzle-sequence');
         sequenceDiv.textContent = `Puzzle Sequence: ${data.sequence.join(', ')}`;
       })
       .catch(error => {
-        console.error('Error fetching puzzle sequence:', error);
+        console.error("Failed to fetch sequence:", error);
+        alert("Error loading puzzle. Please try again later.");
       });
 
-    // Validate the sequence
-    document.getElementById('validate-sequence').addEventListener('click', () => {
-      const userSequence = correctSequence; // Replace this with the actual user input sequence
-      fetch('https://roboguns-github-io.onrender.com/api/validate-sequence', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ sequence: userSequence })
-      })
-      .then(response => response.json())
-      .then(data => {
-        const resultDiv = document.getElementById('result');
-        if (data.success) {
-          resultDiv.textContent = 'Correct sequence!';
-        } else {
-          resultDiv.textContent = 'Wrong sequence. Please try again.';
+    const triangles = document.querySelectorAll(".triangle");
+
+    triangles.forEach(triangle => {
+      triangle.addEventListener("click", () => {
+        // Record the clicked triangle's order
+        const order = triangle.dataset.order;
+        clickedOrder.push(order);
+
+        // Check if the clicked order matches the correct order
+        if (clickedOrder.length === correctOrder.length) {
+          if (JSON.stringify(clickedOrder) === JSON.stringify(correctOrder)) {
+            // If correct, validate with the backend and show success message
+            fetch('https://roboguns-github-io.onrender.com/api/validate-sequence', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ sequence: clickedOrder })
+            })
+            .then(response => response.json())
+            .then(data => {
+              const resultDiv = document.getElementById('result');
+              if (data.success) {
+                resultDiv.textContent = 'Correct sequence!';
+              } else {
+                resultDiv.textContent = 'Wrong sequence. Please try again.';
+              }
+            })
+            .catch(error => {
+              console.error('Error validating sequence:', error);
+            });
+          } else {
+            // If incorrect, show error message
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Wrong sequence. Please try again.';
+          }
+          // Reset the clicked order for a new attempt
+          clickedOrder = [];
         }
-      })
-      .catch(error => {
-        console.error('Error validating sequence:', error);
       });
     });
   </script>
