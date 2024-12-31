@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puzzle Page</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f0f0f0;
+    }
+
+    .puzzle-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .triangle {
+      width: 0;
+      height: 0;
+      border-left: 30px solid transparent;
+      border-right: 30px solid transparent;
+      border-bottom: 50px solid blue;
+      margin: 20px;
+      cursor: pointer;
+    }
+
+    .top-left { transform: rotate(180deg); }
+    .top-right { transform: rotate(270deg); }
+    .bottom-left { transform: rotate(90deg); }
+    .bottom-right { transform: rotate(0deg); }
+  </style>
+</head>
+<body>
+  <div class="puzzle-container">
+    <!-- Central triangle layout -->
+    <div class="triangle top-left" data-order="1"></div>
+    <div class="triangle top-right" data-order="2"></div>
+    <div class="triangle bottom-left" data-order="3"></div>
+    <div class="triangle bottom-right" data-order="4"></div>
+  </div>
+
+  <script>
+    // Placeholder order for unlocking the page
+    const correctOrder = [1, 3, 2, 4]; // To be replaced with your actual order
+    let clickedOrder = [];
+
+    const triangles = document.querySelectorAll(".triangle");
+
+    triangles.forEach(triangle => {
+      triangle.addEventListener("click", () => {
+        // Record the clicked triangle's order
+        const order = parseInt(triangle.dataset.order);
+        clickedOrder.push(order);
+
+        // Check if the clicked order matches the correct order
+        if (clickedOrder.length === correctOrder.length) {
+          if (JSON.stringify(clickedOrder) === JSON.stringify(correctOrder)) {
+            alert("Correct sequence! Unlocking the hidden webpage...");
+            window.location.href = "hidden.html"; // Redirect to the hidden page
+          } else {
+            alert("Wrong sequence. Try again.");
+          }
+          clickedOrder = []; // Reset for the next attempt
+        }
+      });
+    });
+  </script>
+</body>
+</html>
