@@ -39,71 +39,47 @@
   </style>
 </head>
 <body>
-  <h1>Puzzle Test</h1>
-  <div id="puzzle-sequence"></div>
-  <div class="puzzle-container">
-    <!-- Central triangle layout -->
-    <div class="triangle top-left" data-order="1"></div>
-    <div class="triangle top-right" data-order="2"></div>
-    <div class="triangle bottom-left" data-order="3"></div>
-    <div class="triangle bottom-right" data-order="4"></div>
+  <div id="puzzle-container">
+    <h1>Puzzle Test</h1>
+    <div id="puzzle-sequence"></div>
+    <button id="validate-sequence">Validate Sequence</button>
+    <div id="result"></div>
   </div>
-
   <script>
-    let clickedOrder = [];
-    let correctOrder = [];
+    const correctSequence = ['top-left', 'bottom-right', 'top-right', 'bottom-left'];
 
-    // Fetch the puzzle sequence from the backend
+    // Fetch the puzzle sequence from the server
     fetch('https://roboguns-github-io.onrender.com/api/get-sequence')
       .then(response => response.json())
       .then(data => {
-        correctOrder = data.sequence; // Dynamically load the correct sequence
         const sequenceDiv = document.getElementById('puzzle-sequence');
         sequenceDiv.textContent = `Puzzle Sequence: ${data.sequence.join(', ')}`;
       })
       .catch(error => {
-        console.error("Failed to fetch sequence:", error);
-        alert("Error loading puzzle. Please try again later.");
+        console.error('Error fetching puzzle sequence:', error);
       });
 
-    const triangles = document.querySelectorAll(".triangle");
-
-    triangles.forEach(triangle => {
-      triangle.addEventListener("click", () => {
-        // Record the clicked triangle's order
-        const order = parseInt(triangle.dataset.order);
-        clickedOrder.push(order);
-
-        // Check if the clicked order matches the correct order
-        if (clickedOrder.length === correctOrder.length) {
-          if (JSON.stringify(clickedOrder) === JSON.stringify(correctOrder)) {
-            // If correct, validate with the backend and redirect
-            fetch('/api/validate-sequence', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ sequence: clickedOrder })
-            })
-              .then(response => response.json())
-              .then(data => {
-                if (data.success) {
-                  // Redirect to hidden page provided by the backend
-                  window.location.href = data.redirectURL;
-                } else {
-                  alert("Validation failed. Try again.");
-                  clickedOrder = [];
-                }
-              })
-              .catch(error => {
-                console.error("Validation error:", error);
-                alert("Error validating sequence. Please try again later.");
-              });
-          } else {
-            alert("Wrong sequence. Try again.");
-            clickedOrder = [];
-          }
+    // Validate the sequence
+    document.getElementById('validate-sequence').addEventListener('click', () => {
+      const userSequence = correctSequence; // Replace this with the actual user input sequence
+      fetch('https://roboguns-github-io.onrender.com/api/validate-sequence', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ sequence: userSequence })
+      })
+      .then(response => response.json())
+      .then(data => {
+        const resultDiv = document.getElementById('result');
+        if (data.success) {
+          resultDiv.textContent = 'Correct sequence!';
+        } else {
+          resultDiv.textContent = 'Wrong sequence. Please try again.';
         }
+      })
+      .catch(error => {
+        console.error('Error validating sequence:', error);
       });
     });
   </script>
