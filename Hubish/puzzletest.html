@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Puzzle Page</title>
+  <title>Puzzle Test</title>
   <style>
     body {
       margin: 0;
@@ -39,6 +39,8 @@
   </style>
 </head>
 <body>
+  <h1>Puzzle Test</h1>
+  <div id="puzzle-sequence"></div>
   <div class="puzzle-container">
     <!-- Central triangle layout -->
     <div class="triangle top-left" data-order="1"></div>
@@ -52,10 +54,12 @@
     let correctOrder = [];
 
     // Fetch the puzzle sequence from the backend
-    fetch('/api/get-sequence')
+    fetch('https://roboguns-github-io.onrender.com/api/get-sequence')
       .then(response => response.json())
       .then(data => {
         correctOrder = data.sequence; // Dynamically load the correct sequence
+        const sequenceDiv = document.getElementById('puzzle-sequence');
+        sequenceDiv.textContent = `Puzzle Sequence: ${data.sequence.join(', ')}`;
       })
       .catch(error => {
         console.error("Failed to fetch sequence:", error);
