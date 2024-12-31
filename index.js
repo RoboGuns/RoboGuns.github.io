@@ -43,17 +43,21 @@ const correctSequence = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
 
 // API route to get the puzzle sequence
 app.get('/api/puzzle-sequence', (req, res) => {
-  res.json({ sequence: correctSequence });
+  const puzzleSequence = ['top-left', 'bottom-right', 'top-right', 'bottom-left'];
+  res.json({ sequence: puzzleSequence });
 });
 
+
 // API route to validate the user's sequence
-app.post('/api/validate-puzzle', express.json(), (req, res) => {
-  const userSequence = req.body.sequence; // User's clicked sequence
+app.post('/api/validate-puzzle', (req, res) => {
+  const { userSequence } = req.body; // Expected user sequence from the client.
+  const correctSequence = ['top-left', 'bottom-right', 'top-right', 'bottom-left'];
 
-  if (!Array.isArray(userSequence)) {
-    return res.status(400).json({ error: 'Invalid input format' });
+  if (JSON.stringify(userSequence) === JSON.stringify(correctSequence)) {
+    res.json({ success: true });
+  } else {
+    res.json({ success: false });
   }
-
   // Check if the sequence matches
   const isCorrect = JSON.stringify(userSequence) === JSON.stringify(correctSequence);
   if (isCorrect) {
