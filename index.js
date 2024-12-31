@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const port = process.env.PORT || 3000;
 
-// Serve static files (HTML, CSS, JS) from the "public" directory
-app.use(express.static('public'));
+// Serve static files (HTML, CSS, JS) from the "Hubish" directory
+app.use(express.static('Hubish'));
+
+// Serve the SEARCHH.html when the root URL is accessed
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Hubish', 'SEARCHH.html'));
+});
 
 // API route to handle the search
 app.get('/api/search', (req, res) => {
