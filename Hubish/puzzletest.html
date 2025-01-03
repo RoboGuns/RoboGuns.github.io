@@ -87,9 +87,10 @@
             .then(data => {
               const resultDiv = document.getElementById('result');
               if (data.success) {
-                // Redirect to the hidden page on success
-                window.location.href = '/hidden.html';
-              } else {
+              // Redirect to the hidden page on success
+             window.location.href = '/hidden.html';
+            }                
+            else {
                 resultDiv.textContent = 'Wrong sequence. Please try again.';
               }
             })

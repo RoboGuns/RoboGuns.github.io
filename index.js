@@ -57,15 +57,17 @@ app.post('/api/validate-sequence', (req, res) => {
 // Middleware to protect the hidden page
 function protectHiddenPage(req, res, next) {
   if (req.session.solvedPuzzle) {
+    // Allow access if the puzzle is solved
     next();
   } else {
+    // Deny access if the puzzle is not solved
     res.status(403).send('Access denied. Solve the puzzle to unlock this page.');
   }
 }
 
-// Serve the hidden page
+// Securely serve the hidden page
 app.get('/hidden.html', protectHiddenPage, (req, res) => {
-  res.sendFile(path.join(__dirname, 'Hubish', 'hidden.html'));
+  res.sendFile(path.join(__dirname, 'protected', 'hidden.html'));
 });
 
 // ==================== End of Puzzle Functionality ====================
