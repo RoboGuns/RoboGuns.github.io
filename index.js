@@ -53,19 +53,20 @@ app.post('/api/validate-sequence', (req, res) => {
   }
 });
 
-// Middleware to protect the hidden page
 function protectHiddenPage(req, res, next) {
   if (req.session.solvedPuzzle) {
     next(); // Allow access
   } else {
+    console.log('Unauthorized access attempt to hidden page.');
     res.status(403).send('Access denied. Solve the puzzle to unlock this page.');
   }
 }
 
-// Securely serve the hidden page
-app.get('/hidden.html', protectHiddenPage, (req, res) => {
+
+app.get('/hidden', protectHiddenPage, (req, res) => {
   res.sendFile(path.join(__dirname, 'protected', 'hidden.html'));
 });
+
 
 
 // ==================== End of Puzzle Functionality ====================
