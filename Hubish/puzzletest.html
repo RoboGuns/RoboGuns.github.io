@@ -76,7 +76,7 @@
         if (clickedOrder.length === correctOrder.length) {
           if (JSON.stringify(clickedOrder) === JSON.stringify(correctOrder)) {
             // If correct, validate with the backend and redirect to hidden.html
-            fetch('https://roboguns-github-io.onrender.com/api/validate-sequence', {
+            fetch('https://roboguns-github-io.onrender.com/hidden.html', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

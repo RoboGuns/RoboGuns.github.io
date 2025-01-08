@@ -57,14 +57,21 @@ function protectHiddenPage(req, res, next) {
   if (req.session.solvedPuzzle) {
     next(); // Allow access
   } else {
-    console.log('Unauthorized access attempt to hidden page.');
     res.status(403).send('Access denied. Solve the puzzle to unlock this page.');
   }
 }
 
-
 app.get('/hidden', protectHiddenPage, (req, res) => {
   res.sendFile(path.join(__dirname, 'protected', 'hidden.html'));
+});
+
+
+app.get('*', (req, res, next) => {
+  if (req.path === '/hidden.html') {
+    res.status(403).send('Access denied.');
+  } else {
+    next(); // Allow other requests to continue
+  }
 });
 
 
