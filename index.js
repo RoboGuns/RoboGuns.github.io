@@ -5,18 +5,17 @@ const app = express();
 const path = require('path');
 const port = process.env.PORT || 3000;
 
-// Enable CORS for the front-end domain (replace 'https://roboguns.github.io' with your actual front-end domain)
+
 app.use(cors({
-  origin: 'https://roboguns.github.io',  // Replace with your actual front-end domain
+  origin: 'https://roboguns.github.io',  
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type']
 }));
 
-// Serve static files (HTML, CSS, JS) from the "Hubish" directory
 app.use(express.static('Hubish'));
 
-// Parse incoming JSON requests
-app.use(express.json());  // This is necessary for parsing POST requests with JSON bodies
+
+app.use(express.json());  
 
 // ==================== Puzzle Functionality ====================
 
@@ -57,10 +56,8 @@ app.post('/api/validate-sequence', (req, res) => {
 // Middleware to protect the hidden page
 function protectHiddenPage(req, res, next) {
   if (req.session.solvedPuzzle) {
-    // Allow access if the puzzle is solved
-    next();
+    next(); // Allow access
   } else {
-    // Deny access if the puzzle is not solved
     res.status(403).send('Access denied. Solve the puzzle to unlock this page.');
   }
 }
@@ -69,6 +66,7 @@ function protectHiddenPage(req, res, next) {
 app.get('/hidden.html', protectHiddenPage, (req, res) => {
   res.sendFile(path.join(__dirname, 'protected', 'hidden.html'));
 });
+
 
 // ==================== End of Puzzle Functionality ====================
 
