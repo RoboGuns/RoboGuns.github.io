@@ -47,12 +47,13 @@
   </div>
   <div id="result"></div>
 
+  <script src="config.js"></script>
   <script>
     let clickedOrder = [];
     let correctOrder = [];
 
     // Fetch the puzzle sequence from the backend
-    fetch('https://roboguns-github-io.onrender.com/api/get-sequence')
+    fetch(`${config.backendUrl}/api/get-sequence`)
       .then(response => response.json())
       .then(data => {
         correctOrder = data.sequence; // Dynamically load the correct sequence
@@ -60,6 +61,7 @@
         sequenceDiv.textContent = `Puzzle Sequence: ${data.sequence.join(', ')}`;
       })
       .catch(error => {
+        console.error("Failed to fetch sequence. Error details:", error);
         console.error("Failed to fetch sequence:", error);
         alert("Error loading puzzle. Please try again later.");
       });
@@ -76,7 +78,7 @@
         if (clickedOrder.length === correctOrder.length) {
           if (JSON.stringify(clickedOrder) === JSON.stringify(correctOrder)) {
             // If correct, validate with the backend and redirect to hidden.html
-            fetch('https://roboguns-github-io.onrender.com/hidden.html', {
+            fetch(`${config.backendUrl}/hidden.html`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
