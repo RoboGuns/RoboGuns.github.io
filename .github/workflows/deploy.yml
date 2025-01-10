@@ -25,3 +25,9 @@ jobs:
         run: |
           curl -X POST https://api.render.com/v1/services/srv-ctpiehtds78s73d3h5u0/deploy \
           -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+        env:
+          MY_SECRET_KEY: ${{ secrets.MY_SECRET_KEY }} 
+
+      - name: Use MY_SECRET_KEY
+        run: |
+          echo "MY_SECRET_KEY is $MY_SECRET_KEY"  
