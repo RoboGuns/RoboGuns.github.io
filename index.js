@@ -1,29 +1,30 @@
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
-const app = express();
 const path = require('path');
+const puzzleRoutes = require('./routes/puzzleRoutes'); // Import your puzzleRoutes
+const app = express();
 const port = process.env.PORT || 3000;
 
 // Access the secret from environment variables
 const mySecretKey = process.env.MY_SECRET_KEY;
 
 app.use(cors({
-  origin: 'https://roboguns.github.io',  
+  origin: 'https://roboguns.github.io',
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type']
 }));
 
-app.use(express.static('Hubish'));
+app.use(express.static('Hubish'));  // Serving static files
 
-app.use(express.json());  
+app.use(express.json());  // Middleware to parse JSON
 
-// Serve the SEARCHH.html when the root URL is accessed
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Hubish', 'SEARCHH.html'));
-});
+// ==================== API Routes ====================
 
-// API route to handle the search
+// Mount the puzzle-related API route before the wildcard
+app.use('/api', puzzleRoutes);  // Make sure puzzleRoutes is handling /api/validate-sequence
+
+// Example route for search API
 app.get('/api/search', (req, res) => {
   const query = req.query.q; // Get the search term from the query parameter
   if (query.toLowerCase() === 'apple') {
@@ -33,16 +34,15 @@ app.get('/api/search', (req, res) => {
   }
 });
 
-// ==================== Wildcard Route Fix ====================
-// This is where the fix needs to go. If you're using a wildcard route, make sure it doesn't conflict with API routes.
-app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api')) return next(); // Allow API routes to pass through
-  res.sendFile(path.join(__dirname, 'Hubish', 'SEARCHH.html'));
+// Example route to access the secret (for demonstration)
+app.get('/api/secret', (req, res) => {
+  res.json({ secret: mySecretKey });
 });
 
-// Example of using the secret in the app
-app.get('/api/secret', (req, res) => {
-  res.json({ secret: mySecretKey }); // Just for demonstration purposes
+// ==================== Wildcard Route ====================
+// This route will only handle requests that don't match any API route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Hubish', 'SEARCHH.html'));
 });
 
 // Start the server
