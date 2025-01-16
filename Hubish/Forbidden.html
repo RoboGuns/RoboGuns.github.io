@@ -94,42 +94,47 @@
         }
       });
 
-       // Handle Terminal Commands
-  terminalInput.addEventListener("keydown", async (event) => {
-    if (event.key === "Enter") {
-      const command = terminalInput.value.trim();
+      // Handle Terminal Commands
+      terminalInput.addEventListener("keydown", async (e) => {
+        if (e.key === "Enter") {
+          const command = terminalInput.value.trim();
+          if (!command) return;
 
-      if (!command) return; // Ignore empty commands
+          // Display the command in the terminal
+          const userCommand = document.createElement("p");
+          userCommand.textContent = `> ${command}`;
+          terminalBody.appendChild(userCommand);
 
-      // Display the entered command in the terminal
-      const userCommand = document.createElement("p");
-      userCommand.textContent = `> ${command}`;
-      terminalBody.appendChild(userCommand);
+          try {
+            const response = await fetch(`/api/terminal?command=${encodeURIComponent(command)}`);
+            const result = await response.json();
 
-      try {
-        const response = await fetch(`https://roboguns-github-io.onrender.com/api/terminal?command=${encodeURIComponent(command)}`);
-        const result = await response.json();
+            // Display the server's response in the terminal
+            const serverResponse = document.createElement("p");
+            serverResponse.textContent = `> ${result.response}`;
+            terminalBody.appendChild(serverResponse);
 
-        // Display the server's response in the terminal
-        const serverResponse = document.createElement("p");
-        serverResponse.textContent = `> ${result.response}`;
-        terminalBody.appendChild(serverResponse);
-      } catch (error) {
-        const errorResponse = document.createElement("p");
-        errorResponse.textContent = "> Error: Unable to process the command.";
-        errorResponse.style.color = "red";
-        terminalBody.appendChild(errorResponse);
-      }
+            // If the command is "LOGOFF", wait a second and refresh the page
+            if (result.logoff) {
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000); // 1-second delay
+            }
+          } catch (error) {
+            const errorResponse = document.createElement("p");
+            errorResponse.textContent = "> Error: Unable to process the command.";
+            errorResponse.style.color = "red";
+            terminalBody.appendChild(errorResponse);
+          }
 
-      // Clear the input field
-      terminalInput.value = "";
+          // Clear the input field
+          terminalInput.value = "";
 
-      // Scroll to the bottom of the terminal
-      terminalBody.scrollTop = terminalBody.scrollHeight;
-    }
-  });
-});
-
+          // Scroll to the bottom of the terminal
+          terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+      });
+    });
   </script>
 </body>
 </html>
