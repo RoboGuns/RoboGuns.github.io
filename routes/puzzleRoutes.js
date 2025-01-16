@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const correctOrder = ["top-left", "bottom-left", "bottom-right", "top-right", "bottom-right", "top-right"];
+const correctOrder = ["top-right", "bottom-right", "top-right", "bottom-right", "bottom-left", "top-left"];
 
 router.post('/validate-sequence', (req, res) => {
     const { sequence } = req.body;

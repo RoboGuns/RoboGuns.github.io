@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/css/backbutton.css">
   <title>Puzzle Test</title>
   <style>
     body {
@@ -69,7 +70,7 @@
   </div>
   <button id="submit-button">Submit</button>
   <div id="result"></div>
-
+<!-- It all seemed so backwards -->
   <script>
     const correctOrder = []; 
     let clickedOrder = [];
@@ -108,11 +109,11 @@
         })
         .then(data => {
           alert('Correct sequence! Redirecting...');
-          window.location.href = data.redirectUrl; // Backend provides the secured URL
+          window.location.href = data.redirectUrl; 
         })
         .catch(error => {
           resultDiv.textContent = 'Wrong sequence. Please try again.';
-          clickedOrder = []; // Reset the clicked order
+          clickedOrder = []; 
         });
     });
   </script>
