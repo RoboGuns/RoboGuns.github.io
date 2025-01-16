@@ -55,7 +55,9 @@ router.get('/terminal', (req, res) => {
     commandState[userId] = { pendingReboot: true };
     return res.json({ response: loreCommands['SYSTEM REBOOT'] });
   }
-
+  if (command === 'LOGOFF') {
+    return res.json({ response: loreCommands.LOGOFF, logoff: true });
+  }
   // Fallback to regular commands
   const response = loreCommands[command] || "Unknown command. Type 'HELP' for a list of commands.";
   res.json({ response });
