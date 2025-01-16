@@ -82,6 +82,34 @@
       bottom: 0;
       width: 100%;
     }
+    .triangle {
+      width: 0;
+      height: 0;
+      border-left: 25px solid transparent;
+      border-right: 25px solid transparent;
+      border-bottom: 50px solid #3498db; /* Triangle color */
+      position: fixed; /* Or 'absolute' */
+    }
+
+    .triangle-top-left {
+      top: 0;
+      left: 0;
+    }
+
+    .triangle-top-right {
+      top: 0;
+      right: 0;
+    }
+
+    .triangle-bottom-left {
+      bottom: 0;
+      left: 0;
+    }
+
+    .triangle-bottom-right {
+      bottom: 0;
+      right: 0;
+    }
   </style>
 </head>
 <body>
@@ -153,7 +181,7 @@
       </p>
     </div>
   </div>
-
+<div class="triangle triangle-top-right"></div>
   <!-- Footer -->
   <footer>
     &copy; 300000BC - █████AC TAC. All rights reserved.
