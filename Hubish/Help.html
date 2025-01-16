@@ -81,6 +81,34 @@
     #back-button:hover {
       background-color: #45a049;
     }
+    .triangle {
+      width: 0;
+      height: 0;
+      border-left: 25px solid transparent;
+      border-right: 25px solid transparent;
+      border-bottom: 50px solid #3498db; /* Triangle color */
+      position: fixed; /* Or 'absolute' */
+    }
+
+    .triangle-top-left {
+      top: 0;
+      left: 0;
+    }
+
+    .triangle-top-right {
+      top: 0;
+      right: 0;
+    }
+
+    .triangle-bottom-left {
+      bottom: 0;
+      left: 0;
+    }
+
+    .triangle-bottom-right {
+      bottom: 0;
+      right: 0;
+    }
   </style>
 </head>
 <body>
@@ -112,7 +140,7 @@
     <source src="Audio/void19A.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
-
+  <div class="triangle triangle-bottom-left"></div>
   <script>
     const audio = document.getElementById('background-music');
     const startMusicButton = document.getElementById('start-music');
@@ -124,6 +152,7 @@
       startMusicButton.disabled = true; 
       startMusicButton.textContent = 'Music Playing...';
     });
+    
   </script>
 </body>
 </html>
