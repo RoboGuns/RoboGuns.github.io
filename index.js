@@ -16,7 +16,6 @@ app.use(cors({
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type']
 }));
-app.use(bodyParser.json());
 app.use(express.static('Hubish'));  // Serving static files
 
 app.use(express.json());  // Middleware to parse JSON
