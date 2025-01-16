@@ -44,6 +44,19 @@
       color: red;
       font-weight: bold;
     }
+    #submit-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    #submit-button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -54,21 +67,31 @@
     <div class="triangle bottom-left" data-order="bottom-left"></div>
     <div class="triangle bottom-right" data-order="bottom-right"></div>
   </div>
-
+  <button id="submit-button">Submit</button>
   <div id="result"></div>
 
   <script>
- const correctOrder = [];
-let clickedOrder = [];
+    const correctOrder = []; 
+    let clickedOrder = [];
 
-const triangles = document.querySelectorAll(".triangle");
+    const triangles = document.querySelectorAll(".triangle");
+    const resultDiv = document.getElementById('result');
+    const submitButton = document.getElementById('submit-button');
 
-triangles.forEach(triangle => {
-  triangle.addEventListener("click", () => {
-    const order = triangle.dataset.order;
-    clickedOrder.push(order);
+    triangles.forEach(triangle => {
+      triangle.addEventListener("click", () => {
+        const order = triangle.dataset.order;
+        clickedOrder.push(order);
+        console.log('Current clicked order:', clickedOrder);
+      });
+    });
 
-    if (clickedOrder.length === correctOrder.length) {
+    submitButton.addEventListener("click", () => {
+      if (clickedOrder.length === 0) {
+        resultDiv.textContent = 'Please select at least one triangle before submitting.';
+        return;
+      }
+
       fetch('https://roboguns-github-io.onrender.com/api/validate-sequence', {
         method: 'POST',
         headers: {
@@ -88,14 +111,10 @@ triangles.forEach(triangle => {
           window.location.href = data.redirectUrl; // Backend provides the secured URL
         })
         .catch(error => {
-          const resultDiv = document.getElementById('result');
           resultDiv.textContent = 'Wrong sequence. Please try again.';
           clickedOrder = []; // Reset the clicked order
         });
-    }
-  });
-});
-console.log(clickedOrder);
+    });
   </script>
 </body>
 </html>
