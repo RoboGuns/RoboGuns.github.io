@@ -36,7 +36,56 @@
           <p class="hint-text">Hint: Use 'ACCESS FILE 001' to reveal more.</p>
         </div>
       </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+  const terminalBody = document.querySelector(".terminal-body");
+  const terminalInput = document.createElement("input");
 
+  // Set up the input box
+  terminalInput.type = "text";
+  terminalInput.className = "terminal-input";
+  terminalBody.appendChild(terminalInput);
+  terminalInput.focus();
+
+  // Handle user input
+  terminalInput.addEventListener("keydown", async (e) => {
+    if (e.key === "Enter") {
+      const userCommand = terminalInput.value.trim();
+      terminalInput.value = ""; // Clear input box
+
+      // Display the user's command
+      const userCommandElement = document.createElement("p");
+      userCommandElement.textContent = `> ${userCommand}`;
+      terminalBody.appendChild(userCommandElement);
+
+      try {
+        // Fetch response from the server
+        const response = await fetch(`/api/terminal?command=${encodeURIComponent(userCommand)}`);
+        const data = await response.json();
+
+        // Display the server's response
+        const responseElement = document.createElement("p");
+        responseElement.textContent = `> ${data.response}`;
+        terminalBody.appendChild(responseElement);
+
+        // Scroll to the bottom of the terminal
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+
+        // Handle session termination
+        if (userCommand.toUpperCase() === "EXIT") {
+          terminalInput.remove();
+        }
+      } catch (error) {
+        console.error("Error fetching terminal response:", error);
+        const errorElement = document.createElement("p");
+        errorElement.textContent = "> Error: Unable to process command.";
+        terminalBody.appendChild(errorElement);
+      }
+    }
+  });
+});
+
+      </script>
       <!-- Corrupted Image Section -->
       <div class="image-container">
         <img src="corrupted-image.png" alt="Corrupted Scientist File" class="corrupted-image">
