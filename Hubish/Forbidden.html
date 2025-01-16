@@ -36,13 +36,13 @@
           <div class="terminal-header">
             <span class="terminal-title">Terminal Access</span>
           </div>
-          <div class="terminal-body">
-            <p>> Attempting to decrypt hidden logs...</p>
-            <p>> Logs partially recovered.</p>
-            <p class="decrypted-log">
-              **The Hive experiment resulted in catastrophic consequences. Those linked to the Hive's neural network experienced <span class="glitch">mind assimilation</span>.**
-            </p>
-            <p class="hint-text">Hint: Use 'ACCESS FILE 001' to reveal more.</p>
+          <div class="terminal-body" id="terminal-body">
+            <p>> Welcome to the Hive Terminal. Type 'HELP' to get started.</p>
+          </div>
+          <div class="terminal-input">
+            <span>> </span>
+            <input type="text" id="terminal-input" placeholder="Type your command here..." />
+            <button id="terminal-submit">Enter</button>
           </div>
         </div>
       </div>
@@ -62,36 +62,70 @@
       const passwordSubmit = document.getElementById("password-submit");
       const passwordError = document.getElementById("password-error");
 
-      const correctPassword = "hive2023"; // Replace with your desired password or fetch from backend
+      const terminalInput = document.getElementById("terminal-input");
+      const terminalSubmit = document.getElementById("terminal-submit");
+      const terminalBody = document.getElementById("terminal-body");
 
       // Handle Password Submission
       passwordSubmit.addEventListener("click", async () => {
-  const enteredPassword = passwordInput.value.trim();
+        const enteredPassword = passwordInput.value.trim();
 
-  try {
-    const response = await fetch("https://roboguns-github-io.onrender.com/api/validate-password", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ password: enteredPassword })
-    });
+        try {
+          const response = await fetch("https://roboguns-github-io.onrender.com/api/validate-password", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ password: enteredPassword })
+          });
 
-    if (response.ok) {
-      const result = await response.json();
-      if (result.success) {
-        // Hide the password section and show the terminal
-        passwordSection.style.display = "none";
-        terminalSection.style.display = "block";
-      }
-    } else {
-      throw new Error("Incorrect password");
-    }
-  } catch (error) {
-    passwordError.textContent = "Incorrect password. Try again.";
-  }
-});
+          if (response.ok) {
+            const result = await response.json();
+            if (result.success) {
+              // Hide the password section and show the terminal
+              passwordSection.style.display = "none";
+              terminalSection.style.display = "block";
+            }
+          } else {
+            throw new Error("Incorrect password");
+          }
+        } catch (error) {
+          passwordError.textContent = "Incorrect password. Try again.";
+        }
+      });
 
+      // Handle Terminal Commands
+      terminalSubmit.addEventListener("click", async () => {
+        const command = terminalInput.value.trim();
+
+        if (!command) return; // Ignore empty commands
+
+        // Display the entered command in the terminal
+        const userCommand = document.createElement("p");
+        userCommand.textContent = `> ${command}`;
+        terminalBody.appendChild(userCommand);
+
+        try {
+          const response = await fetch(`https://roboguns-github-io.onrender.com/api/terminal?command=${encodeURIComponent(command)}`);
+          const result = await response.json();
+
+          // Display the server's response in the terminal
+          const serverResponse = document.createElement("p");
+          serverResponse.textContent = `> ${result.response}`;
+          terminalBody.appendChild(serverResponse);
+
+          // Clear the input field
+          terminalInput.value = "";
+        } catch (error) {
+          const errorResponse = document.createElement("p");
+          errorResponse.textContent = "> Error: Unable to process the command.";
+          errorResponse.style.color = "red";
+          terminalBody.appendChild(errorResponse);
+        }
+
+        // Scroll to the bottom of the terminal
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+      });
     });
   </script>
 </body>
