@@ -11,10 +11,10 @@ const loreCommands = {
   'ACCESS FILE 003': "Error: File 003 corrupted. Data irretrievable. Initiating system integrity check...",
   'ACCESS FILE 004': "File 004 unlocked. Subject: Hive Interface Protocols. **Excerpt:** 'Sustained exposure to the neural interface destabilizes core personality fragments, leading to... (data missing).'",
   HELP: "This console grants access to fragments of Project Hive's records. Use commands to retrieve available files or investigate system logs. Example commands: 'ACCESS FILE 001', 'ERRORLOGS'. Type 'LIST FILES' to see all retrievable data.",
-  'LIST FILES': "Available files: FILE 001, FILE 002, FILE 004. Corrupted files: FILE 003. Enter 'ACCESS FILE <number>' to view details.",
-  ERRORLOGS: "System integrity compromised. 87% of project files corrupted. Partial recovery available: FILE 001, FILE 002. Cause: Hive central neural collapse.",
+  'LS': "Available files: FILE 001, FILE 002, FILE 004. Corrupted files: FILE 003. Enter 'ACCESS FILE <number>' to view details.",
+  ERRORLOGS: "System integrity compromised. 87% of project files corrupted. Partial recovery available: FILE 001, FILE 002. Cause: Project B-Hive Corruption.",
   'SYSTEM STATUS': "Hive Neural Interface: Offline. Network Nodes: 2 operational, 12 corrupted. Threat Level: Contained.",
-  'LIST ACTIVE USERS': "Active connections: 2. User ID: ADMIN (you), User ID: UNKNOWN. Warning: Unauthorized user detected.",
+  'LIST ACTIVE USERS': "Active connections: 2. User ID: B-Spore (you), User ID: UNKNOWN. Warning: Unauthorized user detec- *System relax*.",
   'SYSTEM REBOOT': "System reboot initiated. Warning: Temporary data loss may occur. Proceed with caution. (Type 'CONFIRM REBOOT' to continue.)",
   'CONFIRM REBOOT': "No reboot process initiated. Type 'SYSTEM REBOOT' to start.", 
   'WHOAMI': "User ID: USER. Access Level: Minimum. Last login: 3 minutes ago. Location: [REDACTED].",
@@ -27,7 +27,6 @@ const loreCommands = {
   'ACCESS LOGS': "Recent access logs: [REDACTED]. Anomalies detected: User access from UNKNOWN DEVICE on [REDACTED DATE].",
   'REQUEST NODE STATUS': "Node 1: Operational. Node 2: Operational. Node 3: Corrupted. Node 4: Corrupted. Node 5: Missing.",
   'HISTORY': "Session command history: HELP, ACCESS FILE 001, LIST FILES, SYSTEM STATUS, ERRORLOGS.",
-  'TIME': "System time: 03:14:15 UTC. Hive time: Irrelevant.",
   'HIVE ANALYSIS': "Hive neural analysis: Fragments recovered: 2. Hive memory: 90% corrupted. Neural echoes detected: 14.",
   'SEND MESSAGE': "Message failed to send. Reason: No recipients available in the network.",
   'RECALL MEMORY': "Memory recall: ERROR. User identity unverified. Memory encryption intact.",
@@ -37,6 +36,8 @@ const loreCommands = {
   'WEATHER': "Current weather: Irrelevant. No one is outside anymore.",
   'WHO WAS HERE': "Previous users: Dr. A. Quinn, Subject Delta, UNKNOWN ENTITY. Last login: Before the collapse.",
   'REPAIR SYSTEM': "Repair initiated... Progress: 2%. Error: Core files missing. Repair halted.",
+  'sudo apt-get update': "Package update failed... ERROR: Repository unreachable. Network disruption detected.",
+  'top': "System processes: 3 active processes. High resource usage detected: Process 'hive-core' consuming 80% CPU.",
 };
 
 // Endpoint to handle terminal commands
