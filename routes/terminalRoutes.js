@@ -17,9 +17,9 @@ const loreCommands = {
   'LIST ACTIVE USERS': "Active connections: 2. User ID: ADMIN (you), User ID: UNKNOWN. Warning: Unauthorized user detected.",
   'SYSTEM REBOOT': "System reboot initiated. Warning: Temporary data loss may occur. Proceed with caution. (Type 'CONFIRM REBOOT' to continue.)",
   'CONFIRM REBOOT': "No reboot process initiated. Type 'SYSTEM REBOOT' to start.", 
-  'WHOAMI': "User ID: ADMIN. Access Level: Top Secret. Last login: 3 minutes ago. Location: [REDACTED].",
-  'UPTIME': "System uptime: 13 days, 7 hours, 42 minutes. Last reboot: During Hive Event Protocol Alpha.",
-  'PING HIVE CORE': "Pinging... Response from Hive Core failed. Status: UNREACHABLE. Cause: Node corruption.",
+  'WHOAMI': "User ID: USER. Access Level: Minimum. Last login: 3 minutes ago. Location: [REDACTED].",
+  'UPTIME': "System uptime: 13 days, 7 hours, 42 minutes. Last reboot: [Currupted].",
+  'PING HIVE CORE': "Pinging... Response from Hive Core receved. Status: Expanding. Cause: Node corruption.",
   'TRACE ROUTE': "Tracing route to external connections... Hop 1: Success. Hop 2: UNKNOWN NODE DETECTED. Terminating trace for security reasons.",
   'LOGOFF': "Logging off... Warning: Unfinished session data may be lost. Goodbye.",
   'DIAGNOSTICS': "System Check: 5 errors detected. Critical: Hive neural interface offline. Suggested action: RECONNECT NODES.",
@@ -49,7 +49,10 @@ router.get('/terminal', (req, res) => {
     delete commandState[userId]; // Clear pending state
     return res.json({ response: "Rebooting system... Error: Core files missing. Reboot failed." });
   }
-
+  if (command === 'TIME') {
+    const currentCETTime = new Date().toLocaleString("en-GB", { timeZone: "Europe/Berlin", hour12: false });
+    return res.json({ response: `System time (CET): ${currentCETTime}` });
+  }
   // Handle 'SYSTEM REBOOT' to set pending state
   if (command === 'SYSTEM REBOOT') {
     commandState[userId] = { pendingReboot: true };
