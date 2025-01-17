@@ -29,13 +29,30 @@ const loreCommands = {
   'HISTORY': "Session command history: HELP, ACCESS FILE 001, LIST FILES, SYSTEM STATUS, ERRORLOGS.",
   'HIVE ANALYSIS': "Hive neural analysis: Fragments recovered: 2. Hive memory: 90% corrupted. Neural echoes detected: 14.",
   'SEND MESSAGE': "Message failed to send. Reason: No recipients available in the network.",
-  'RECALL MEMORY': "Memory recall: ERROR. User identity unverified. Memory encryption intact.",
+  'RECALL MEMORY': "Memory recall: ERROR. User identity unverified. Memory en cryption intact.",
   'HIVE ECHO': "Echo response: 'We are one. You will join.'",
   'PURGE FILES': "Purge initiated... Error: Insufficient privileges. Admin override required.",
   'CORRUPTION REPORT': "System corruption: 87%. Neural network fragmentation: Irrecoverable. Last stable state: 6 months ago.",
   'WEATHER': "Current weather: Irrelevant. No one is outside anymore.",
   'WHO WAS HERE': "Previous users: Dr. A. Quinn, Subject Delta, UNKNOWN ENTITY. Last login: Before the collapse.",
-  'REPAIR SYSTEM': "Repair initiated... Progress: 2%. Error: Core files missing. Repair halted.",
+  'REPAIR SYSTEM': function() {
+    const loadingBarLength = 20; // Length of the loading bar
+    let progress = 0;
+
+    const interval = setInterval(() => {
+      progress += 1; // Increment progress
+      const filledBar = Math.floor((progress / 100) * loadingBarLength);
+      const emptyBar = loadingBarLength - filledBar;
+
+      console.clear();
+      console.log(`Repairing System: [${'='.repeat(filledBar)}${' '.repeat(emptyBar)}] ${progress}%`);
+
+      if (progress === 2) {
+        clearInterval(interval); // Stop the interval at 2%
+        console.log("Error: Repair halted. Core files missing. Progress: 2%.");
+      }
+    }, 100); // Adjust speed of the loading bar
+  },
   'sudo apt-get update': "Package update failed... ERROR: Repository unreachable. Network disruption detected.",
   'top': "System processes: 3 active processes. High resource usage detected: Process 'hive-core' consuming 80% CPU.",
 };
@@ -61,6 +78,11 @@ router.get('/terminal', (req, res) => {
   }
   if (command === 'LOGOFF') {
     return res.json({ response: loreCommands.LOGOFF, logoff: true });
+  }
+  // Handle 'REPAIR SYSTEM' using loreCommands
+  if (command === 'REPAIR SYSTEM') {
+    loreCommands['REPAIR SYSTEM']();
+    return res.json({ response: "Repair process started. Check console for progress." });
   }
   // Fallback to regular commands
   const response = loreCommands[command] || "Unknown command. Type 'HELP' for a list of commands.";
