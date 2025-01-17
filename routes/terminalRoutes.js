@@ -52,51 +52,55 @@ const loreCommands = {
       }
     }, 100); // Adjust speed of the loading bar
   },
-  'SCAN': function() {
-    const loadingBarLength = 20; // Length of the loading bar
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += 1; // Increment progress
-      const filledBar = Math.floor((progress / 100) * loadingBarLength);
-      const emptyBar = loadingBarLength - filledBar;
-
-      console.clear();
-      console.log(`Repairing System: [${'='.repeat(filledBar)}${' '.repeat(emptyBar)}] ${progress}%`);
-
-      if (progress === 100) {
-        clearInterval(interval); // Stop the interval at 2%
-        console.log("System found no fatal errors. Scanning complete.");
-      }
-    }, 100); // Adjust speed of the loading bar
-  },
   'sudo apt-get update': "Package update failed... ERROR: Repository unreachable. Network disruption detected.",
   'top': "System processes: 3 active processes. High resource usage detected: Process 'hive-core' consuming 80% CPU.",
 };
 
 // Endpoint to handle terminal commands
-// Endpoint to handle terminal commands
 router.get('/terminal', (req, res) => {
   const userId = req.query.userId || 'default'; // Mock user/session ID
   const command = req.query.command?.toUpperCase() || ''; // Get the command from query params
 
+  // Check if the user has pending confirmation for 'CONFIRM REBOOT'
+  if (command === 'CONFIRM REBOOT' && commandState[userId]?.pendingReboot) {
+    delete commandState[userId]; // Clear pending state
+    return res.json({ response: "Rebooting system... Error: Core files missing. Reboot failed." });
+  }
+  if (command === 'TIME') {
+    const currentCETTime = new Date().toLocaleString("en-GB", { timeZone: "Europe/Berlin", hour12: false });
+    return res.json({ response: `System time (CET): ${currentCETTime}` });
+  }
+  // Handle 'SYSTEM REBOOT' to set pending state
+  if (command === 'SYSTEM REBOOT') {
+    commandState[userId] = { pendingReboot: true };
+    return res.json({ response: "No reboot process initiated. Type 'CONFIRM REBOOT' to start." });
+  }
+
+  // Handle 'REPAIR SYSTEM' command
   if (command === 'REPAIR SYSTEM') {
-    return res.json({ response: "Repairing system... Simulating progress. Await further updates on the terminal." });
+    let progress = 0;
+    const loadingBarLength = 20; // Length of the loading bar
+    const loadingInterval = setInterval(() => {
+      progress += 1; // Increment progress
+      const filledBar = Math.floor((progress / 100) * loadingBarLength);
+      const emptyBar = loadingBarLength - filledBar;
+
+      // Construct loading bar string
+      const loadingBar = `[${'='.repeat(filledBar)}${' '.repeat(emptyBar)}] ${progress}%`;
+
+      // Stop the loading bar at 2% and send an error message
+      if (progress === 2) {
+        clearInterval(loadingInterval);
+        res.json({ response: `Repairing System: ${loadingBar}\nError: Repair halted. Core files missing.` });
+      } else {
+        // Continue updating the client
+        res.json({ response: `Repairing System: ${loadingBar}` });
+      }
+    }, 100); // Adjust speed as needed
+    return;
   }
 
-  if (command === 'SCAN') {
-    return res.json({ response: "Scanning system... Simulating progress. Await further updates on the terminal." });
-  }
-
-  // Handle other commands
-  if (loreCommands[command]) {
-    const response = typeof loreCommands[command] === 'function'
-      ? loreCommands[command]()
-      : loreCommands[command];
-    return res.json({ response });
-  }
-
-  // Default response for unknown commands
-  return res.status(400).json({ response: "Unknown command. Type 'HELP' for available commands." });
+  // Other command handling...
 });
 
 module.exports = router;
