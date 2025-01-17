@@ -133,6 +133,34 @@
             terminalBody.appendChild(errorResponse);
           }
 
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+          }, 100); // Adjust update speed
+        }
+        if (command.toUpperCase() === "REPAIR SYSTEM") {
+        let progress = 0;
+        const loadingBarLength = 20;
+
+        // Simulate the loading bar with incremental updates
+        const interval = setInterval(async () => {
+          progress += 1;
+          const filledBar = Math.floor((progress / 100) * loadingBarLength);
+          const emptyBar = loadingBarLength - filledBar;
+
+          const loadingBar = `[${'='.repeat(filledBar)}${' '.repeat(emptyBar)}] ${progress}%`;
+
+          const progressUpdate = document.createElement("p");
+          progressUpdate.textContent = `Scanning System: ${loadingBar}`;
+          terminalBody.appendChild(progressUpdate);
+
+          if (progress === 100) {
+            clearInterval(interval);
+
+            const errorResponse = document.createElement("p");
+            errorResponse.textContent = "Scan Complete: No fatally corrupted files found.";
+            errorResponse.style.color = "red";
+            terminalBody.appendChild(errorResponse);
+          }
+
           terminalBody.scrollTop = terminalBody.scrollHeight;
         }, 100); // Adjust update speed
       } else {
