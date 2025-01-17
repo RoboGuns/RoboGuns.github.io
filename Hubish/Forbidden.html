@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Forbidden Logs</title>
+  <title>B-Hive</title>
   <link rel="stylesheet" href="/css/Forbidden.css">
   <link rel="stylesheet" type="text/css" href="/css/backbutton.css">
 </head>
@@ -11,7 +11,7 @@
   <div class="container">
     <!-- Header Section -->
     <header class="classified-header">
-      <h1>CLASSIFIED: Project Hive</h1>
+      <h1>CLASSIFIED: Project B-Hive</h1>
       <div class="header-line"></div>
     </header>
 
@@ -31,8 +31,8 @@
       <div class="content">
         <h2 class="subheading">Experiment Report</h2>
         <p class="intro-text">
-          This document contains highly confidential information regarding <span class="highlight">Project Hive</span>. 
-          Unauthorized access will result in immediate termination of connection. Proceed with caution.
+          This document contains highly confidential information regarding <span class="highlight">Project B-Hive</span>. 
+          Unauthorized access will result in immediate termination of connection.
         </p>
 
         <div class="terminal">
@@ -40,8 +40,8 @@
             <span class="terminal-title">Terminal Access</span>
           </div>
           <div class="terminal-body" id="terminal-body">
-            <p>> Welcome to the Hive Terminal. Type 'HELP' for more information.</p>
-            <p>ERROR: Multiple currupted files found. Type 'ERRORLOGS' for more information</p>
+            <p>> Welcome to the TAC Documentation of B-Hive. Type 'HELP' for more information.</p>
+            <p>> ERROR: Multiple currupted files found. Type 'ERRORLOGS' for more information</p>
           </div>
           <div class="terminal-input">
             <span>> </span>
@@ -68,7 +68,6 @@
       const terminalInput = document.getElementById("terminal-input");
       const terminalBody = document.getElementById("terminal-body");
 
-      // Handle Password Submission
       passwordSubmit.addEventListener("click", async () => {
         const enteredPassword = passwordInput.value.trim();
 
@@ -84,7 +83,6 @@
           if (response.ok) {
             const result = await response.json();
             if (result.success) {
-              // Hide the password section and show the terminal
               passwordSection.style.display = "none";
               terminalSection.style.display = "block";
             }
@@ -112,7 +110,6 @@
         const response = await fetch(`https://roboguns-github-io.onrender.com/api/terminal?command=${encodeURIComponent(command)}`);
         const result = await response.json();
 
-        // Display the server's response in the terminal
         const serverResponse = document.createElement("p");
         serverResponse.textContent = `> ${result.response}`;
         terminalBody.appendChild(serverResponse);
@@ -123,10 +120,8 @@
         terminalBody.appendChild(errorResponse);
       }
 
-      // Clear the input field
       terminalInput.value = "";
 
-      // Scroll to the bottom of the terminal
       terminalBody.scrollTop = terminalBody.scrollHeight;
     }
   });
