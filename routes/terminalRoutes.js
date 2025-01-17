@@ -74,71 +74,29 @@ const loreCommands = {
 };
 
 // Endpoint to handle terminal commands
+// Endpoint to handle terminal commands
 router.get('/terminal', (req, res) => {
   const userId = req.query.userId || 'default'; // Mock user/session ID
   const command = req.query.command?.toUpperCase() || ''; // Get the command from query params
 
-  // Check if the user has pending confirmation for 'CONFIRM REBOOT'
-  if (command === 'CONFIRM REBOOT' && commandState[userId]?.pendingReboot) {
-    delete commandState[userId]; // Clear pending state
-    return res.json({ response: "Rebooting system... Error: Core files missing. Reboot failed." });
-  }
-  if (command === 'TIME') {
-    const currentCETTime = new Date().toLocaleString("en-GB", { timeZone: "Europe/Berlin", hour12: false });
-    return res.json({ response: `System time (CET): ${currentCETTime}` });
-  }
-  // Handle 'SYSTEM REBOOT' to set pending state
-  if (command === 'SYSTEM REBOOT') {
-    commandState[userId] = { pendingReboot: true };
-    return res.json({ response: "No reboot process initiated. Type 'CONFIRM REBOOT' to start." });
-  }
-
-  // Handle 'REPAIR SYSTEM' command
   if (command === 'REPAIR SYSTEM') {
-    let progress = 0;
-    const loadingBarLength = 20; // Length of the loading bar
-    const loadingInterval = setInterval(() => {
-      progress += 1; // Increment progress
-      const filledBar = Math.floor((progress / 100) * loadingBarLength);
-      const emptyBar = loadingBarLength - filledBar;
-
-      // Construct loading bar string
-      const loadingBar = `[${'='.repeat(filledBar)}${' '.repeat(emptyBar)}] ${progress}%`;
-
-      // Stop the loading bar at 2% and send an error message
-      if (progress === 2) {
-        clearInterval(loadingInterval);
-        res.json({ response: `Repairing System: ${loadingBar}\nError: Repair halted. Core files missing.` });
-      } else {
-        // Continue updating the client
-        res.json({ response: `Repairing System: ${loadingBar}` });
-      }
-    }, 100); // Adjust speed as needed
-    return;
+    return res.json({ response: "Repairing system... Simulating progress. Await further updates on the terminal." });
   }
+
   if (command === 'SCAN') {
-    let progress = 0;
-    const loadingBarLength = 20; // Length of the loading bar
-    const loadingInterval = setInterval(() => {
-      progress += 1; // Increment progress
-      const filledBar = Math.floor((progress / 100) * loadingBarLength);
-      const emptyBar = loadingBarLength - filledBar;
-
-      // Construct loading bar string
-      const loadingBar = `[${'='.repeat(filledBar)}${' '.repeat(emptyBar)}] ${progress}%`;
-
-      // Stop the loading bar at 2% and send an error message
-      if (progress === 2) {
-        clearInterval(loadingInterval);
-        res.json({ response: `Repairing System: ${loadingBar}\nError: Repair halted. Core files missing.` });
-      } else {
-        // Continue updating the client
-        res.json({ response: `Repairing System: ${loadingBar}` });
-      }
-    }, 100); // Adjust speed as needed
-    return;
+    return res.json({ response: "Scanning system... Simulating progress. Await further updates on the terminal." });
   }
-  // Other command handling...
+
+  // Handle other commands
+  if (loreCommands[command]) {
+    const response = typeof loreCommands[command] === 'function'
+      ? loreCommands[command]()
+      : loreCommands[command];
+    return res.json({ response });
+  }
+
+  // Default response for unknown commands
+  return res.status(400).json({ response: "Unknown command. Type 'HELP' for available commands." });
 });
 
 module.exports = router;
