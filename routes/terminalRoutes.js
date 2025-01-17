@@ -73,19 +73,34 @@ router.get('/terminal', (req, res) => {
   // Handle 'SYSTEM REBOOT' to set pending state
   if (command === 'SYSTEM REBOOT') {
     commandState[userId] = { pendingReboot: true };
-    return res.json({ response: loreCommands['SYSTEM REBOOT'] });
+    return res.json({ response: "No reboot process initiated. Type 'CONFIRM REBOOT' to start." });
   }
-  if (command === 'LOGOFF') {
-    return res.json({ response: loreCommands.LOGOFF, logoff: true });
-  }
-  // Handle 'REPAIR SYSTEM' using loreCommands
+
+  // Handle 'REPAIR SYSTEM' command
   if (command === 'REPAIR SYSTEM') {
-    loreCommands['REPAIR SYSTEM']();
-    return res.json({ response: "Repair process started. Check console for progress." });
+    let progress = 0;
+    const loadingBarLength = 20; // Length of the loading bar
+    const loadingInterval = setInterval(() => {
+      progress += 1; // Increment progress
+      const filledBar = Math.floor((progress / 100) * loadingBarLength);
+      const emptyBar = loadingBarLength - filledBar;
+
+      // Construct loading bar string
+      const loadingBar = `[${'='.repeat(filledBar)}${' '.repeat(emptyBar)}] ${progress}%`;
+
+      // Stop the loading bar at 2% and send an error message
+      if (progress === 2) {
+        clearInterval(loadingInterval);
+        res.json({ response: `Repairing System: ${loadingBar}\nError: Repair halted. Core files missing.` });
+      } else {
+        // Continue updating the client
+        res.json({ response: `Repairing System: ${loadingBar}` });
+      }
+    }, 100); // Adjust speed as needed
+    return;
   }
-  // Fallback to regular commands
-  const response = loreCommands[command] || "Unknown command. Type 'HELP' for a list of commands.";
-  res.json({ response });
+
+  // Other command handling...
 });
 
 module.exports = router;

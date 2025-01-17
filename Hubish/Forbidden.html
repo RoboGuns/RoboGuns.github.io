@@ -108,19 +108,49 @@
       userCommand.textContent = `> ${command}`;
       terminalBody.appendChild(userCommand);
 
-      try {
-        const response = await fetch(`https://roboguns-github-io.onrender.com/api/terminal?command=${encodeURIComponent(command)}`);
-        const result = await response.json();
+      if (command.toUpperCase() === "REPAIR SYSTEM") {
+        let progress = 0;
+        const loadingBarLength = 20;
 
-        // Display the server's response in the terminal
-        const serverResponse = document.createElement("p");
-        serverResponse.textContent = `> ${result.response}`;
-        terminalBody.appendChild(serverResponse);
-      } catch (error) {
-        const errorResponse = document.createElement("p");
-        errorResponse.textContent = "> Error: Unable to process the command.";
-        errorResponse.style.color = "red";
-        terminalBody.appendChild(errorResponse);
+        // Simulate the loading bar with incremental updates
+        const interval = setInterval(async () => {
+          progress += 1;
+          const filledBar = Math.floor((progress / 100) * loadingBarLength);
+          const emptyBar = loadingBarLength - filledBar;
+
+          const loadingBar = `[${'='.repeat(filledBar)}${' '.repeat(emptyBar)}] ${progress}%`;
+
+          const progressUpdate = document.createElement("p");
+          progressUpdate.textContent = `Repairing System: ${loadingBar}`;
+          terminalBody.appendChild(progressUpdate);
+
+          if (progress === 2) {
+            clearInterval(interval);
+
+            const errorResponse = document.createElement("p");
+            errorResponse.textContent = "Error: Repair halted. Core files missing.";
+            errorResponse.style.color = "red";
+            terminalBody.appendChild(errorResponse);
+          }
+
+          terminalBody.scrollTop = terminalBody.scrollHeight;
+        }, 100); // Adjust update speed
+      } else {
+        // For other commands, fetch server responses
+        try {
+          const response = await fetch(`https://roboguns-github-io.onrender.com/api/terminal?command=${encodeURIComponent(command)}`);
+          const result = await response.json();
+
+          // Display the server's response in the terminal
+          const serverResponse = document.createElement("p");
+          serverResponse.textContent = `> ${result.response}`;
+          terminalBody.appendChild(serverResponse);
+        } catch (error) {
+          const errorResponse = document.createElement("p");
+          errorResponse.textContent = "> Error: Unable to process the command.";
+          errorResponse.style.color = "red";
+          terminalBody.appendChild(errorResponse);
+        }
       }
 
       // Clear the input field
