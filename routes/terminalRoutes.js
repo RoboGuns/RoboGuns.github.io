@@ -38,7 +38,6 @@ const loreCommands = {
   'REPAIR SYSTEM': function() {
     const loadingBarLength = 20; // Length of the loading bar
     let progress = 0;
-
     const interval = setInterval(() => {
       progress += 1; // Increment progress
       const filledBar = Math.floor((progress / 100) * loadingBarLength);
