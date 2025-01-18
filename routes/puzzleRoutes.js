@@ -9,7 +9,7 @@ router.post('/validate-sequence', (req, res) => {
     if (JSON.stringify(sequence) === JSON.stringify(correctOrder)) {
         return res.json({
             message: 'Correct sequence!',
-            redirectUrl: 'https://example.com/success',
+            redirectUrl: 'https://roboguns.github.io/Hubish/Forbidden.html',
         });
     } else {
         return res.status(400).json({ message: 'Invalid sequence' });
