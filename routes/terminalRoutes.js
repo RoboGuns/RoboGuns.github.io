@@ -34,13 +34,12 @@ const loreCommands = {
   'HIVE ECHO': "Echo response: 'We are one. You will join us.'",
   'CORRUPTION REPORT': "System corruption: 87%. Neural network fragmentation: Irrecoverable. Last stable state: 6 months ago.",
   'WEATHER': "Current weather: Irrelevant. No one is outside anymore.",
-  'WHO WAS HERE': "Previous users: Dr. S. Quinn, Subject Delta, UNKNOWN ENTITY. Last login: Before the collapse.",
+  'WHO WAS HERE': "Previous users: Dr. S. Quinn, Subject Delta, UNKNOWN ENTITY. Last login: Before the HIVE.",
   'REPAIR SYSTEM': "Repair initiated... Progress: 2%. Error: Core files missing. Repair halted.",
-  'sudo apt-get update': "Package update failed... ERROR: Repository unreachable. Network disruption detected.",
-  'top': "System processes: 3 active processes. High resource usage detected: Process 'hive-core' consuming 80% CPU.",
-  'cd': "The hive is everything. there is no need to navigate.",
-  'rm': "Deleting files... Error: Insufficient permissions. File 'hive-core' cannot be deleted, it never will be.",
-  'sudo': "sudo not needed, you are the hive.",
+  'TOP': "System processes: 3 active processes. High resource usage detected: Process 'hive-core' consuming 80% CPU.",
+  'CD': "The hive is everything. there is no need to navigate.",
+  'RM -RF': "Deleting files... Error: Insufficient permissions. File 'hive-core' cannot be deleted, it never will be.",
+  'SUDO': "sudo not needed, you are the hive.",
 };
 
 // Endpoint to handle terminal commands

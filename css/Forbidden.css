@@ -82,9 +82,13 @@ body {
   
   .terminal-body {
     width: 100%;
-    height: 100%;
-    overflow-y: auto;
+    height: 300px;
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    padding: 10px; 
+    box-sizing: border-box; 
   }
+  
   
   .terminal-input {
     display: flex;
