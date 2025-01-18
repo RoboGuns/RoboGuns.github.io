@@ -49,7 +49,7 @@
 </head>
 <body>
   
-  <div id="puzzle-sequence">Enter Vault Code <a herf="SEARCHH.html">(check backend)</a></div>
+  <div id="puzzle-sequence">Enter Vault Code <p><a href="SEARCHH.html">(check backend)</a></p></div>
   <div class="puzzle-container">
     <div class="triangle top-left" data-order="top-left"></div>
     <div class="triangle top-right" data-order="top-right"></div>
@@ -77,6 +77,7 @@ triangles.forEach(triangle => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ sequence: clickedOrder }),
+        
       })
         .then(response => {
           if (response.ok) {
@@ -94,6 +95,10 @@ triangles.forEach(triangle => {
           resultDiv.textContent = 'Wrong sequence. Please try again.';
           clickedOrder = [];
         });
+        if (clickedOrder.length > correctOrder.length) {
+  clickedOrder = [];
+}
+
     }
   });
 });
