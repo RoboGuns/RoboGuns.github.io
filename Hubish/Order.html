@@ -49,7 +49,7 @@
 </head>
 <body>
   
-  <div id="puzzle-sequence">Enter Vault Code</div>
+  <div id="puzzle-sequence">Enter Vault Code <a herf="SEARCHH.html">(check backend)</a></div>
   <div class="puzzle-container">
     <div class="triangle top-left" data-order="top-left"></div>
     <div class="triangle top-right" data-order="top-right"></div>
@@ -60,7 +60,7 @@
   <div id="result"></div>
   <button id="back-button" onclick="window.location.href='../index.html';">Back</button>
   <script>
- const correctOrder = ["top-left", "top-right", "bottom-left", "bottom-right"]; // Keep only for reference
+ const correctOrder = [];
 let clickedOrder = [];
 
 const triangles = document.querySelectorAll(".triangle");
@@ -87,12 +87,12 @@ triangles.forEach(triangle => {
         })
         .then(data => {
           alert('Correct sequence! Redirecting...');
-          window.location.href = data.redirectUrl; // Backend provides the secured URL
+          window.location.href = data.redirectUrl;
         })
         .catch(error => {
           const resultDiv = document.getElementById('result');
           resultDiv.textContent = 'Wrong sequence. Please try again.';
-          clickedOrder = []; // Reset the clicked order
+          clickedOrder = [];
         });
     }
   });

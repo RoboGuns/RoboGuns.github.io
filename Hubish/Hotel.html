@@ -123,7 +123,7 @@
         <h2>The Sapien Suite</h2>
         <p>A one-of-a-kind experience</p>
        
-        <button onclick="window.location.href='Training.html'">Book Now</button>
+        <button onclick="window.location.href='WelcomeToTheHive.html'">Book Now</button>
       </div>
     </section>
   </main>
@@ -133,24 +133,13 @@
   <footer>
     &copy; En. All Rights Reserved. <!-- Supported and funded by Happy Campers Co. -->
   </footer>
-
+  <button id="start-music">Start Music</button>
   <audio id="background-music" loop>
     <source src="Audio/Level 5 Terror Hotel.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
-
-  <script>
-const audio = document.getElementById('background-music');
-    const startMusicButton = document.getElementById('start-music');
-
-    startMusicButton.addEventListener('click', () => {
-      audio.play().catch(error => {
-        console.log('Audio playback failed:', error);
-      });
-      startMusicButton.disabled = true; 
-      startMusicButton.textContent = 'Music Playing...';
-    });
-    
+<script src="JavaScripts/background-music.js"></script>
+  <script> 
     function bookRoom(roomType) {
       alert(`You have chosen to book the ${roomType}. An agent will help you shortly... Await an email`);
     }
