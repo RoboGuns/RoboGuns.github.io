@@ -48,6 +48,7 @@
   </style>
 </head>
 <body>
+  
   <div id="puzzle-sequence">Enter Vault Code</div>
   <div class="puzzle-container">
     <div class="triangle top-left" data-order="top-left"></div>
@@ -57,7 +58,7 @@
   </div>
 
   <div id="result"></div>
-
+  <button id="back-button" onclick="window.location.href='../index.html';">Back</button>
   <script>
  const correctOrder = ["top-left", "top-right", "bottom-left", "bottom-right"]; // Keep only for reference
 let clickedOrder = [];

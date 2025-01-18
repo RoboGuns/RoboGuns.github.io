@@ -87,8 +87,29 @@ body {
     overflow-x: hidden; 
     padding: 10px; 
     box-sizing: border-box; 
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: #00ff00 #111; /* Handle and track colors */
   }
   
+  .terminal-body::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+  
+  .terminal-body::-webkit-scrollbar-track {
+    background: #111; /* Background of the track */
+    border: 1px solid #444; /* Optional border for track */
+    border-radius: 5px;
+  }
+  
+  .terminal-body::-webkit-scrollbar-thumb {
+    background: #00ff00; /* Color of the scrollbar handle */
+    border-radius: 5px; /* Rounded corners */
+    border: 2px solid #111; /* Border to blend with the background */
+  }
+  
+  .terminal-body::-webkit-scrollbar-thumb:hover {
+    background: #00cc00; /* Color on hover for the scrollbar handle */
+  }
   
   .terminal-input {
     display: flex;
