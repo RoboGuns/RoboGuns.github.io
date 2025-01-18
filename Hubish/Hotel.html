@@ -134,22 +134,27 @@
     &copy; En. All Rights Reserved. <!-- Supported and funded by Happy Campers Co. -->
   </footer>
 
-  <audio id="background-sound" loop>
-    <source src="Level 5 Terror Hotel.mp3" type="audio/mpeg">
+  <audio id="background-music" loop>
+    <source src="Audio/Level 5 Terror Hotel.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
   <script>
-    const backgroundSound = document.getElementById('background-sound');
-    backgroundSound.play().catch(error => {
-      console.log('Background sound autoplay failed. Waiting for user interaction.');
+const audio = document.getElementById('background-music');
+    const startMusicButton = document.getElementById('start-music');
+
+    startMusicButton.addEventListener('click', () => {
+      audio.play().catch(error => {
+        console.log('Audio playback failed:', error);
+      });
+      startMusicButton.disabled = true; 
+      startMusicButton.textContent = 'Music Playing...';
     });
+    
     function bookRoom(roomType) {
       alert(`You have chosen to book the ${roomType}. An agent will help you shortly... Await an email`);
     }
-    document.body.addEventListener('click', () => {
-      backgroundSound.play();
-    });
+
   </script>
 </body>
 </html>
