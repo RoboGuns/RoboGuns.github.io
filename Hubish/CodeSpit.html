@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARG Code Revealer</title>
+    <style>
+        /* Basic reset and layout */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #6e7bff, #9c88ff);
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .code-box {
+            font-size: 1.5rem;
+            font-family: 'Courier New', monospace;
+            background-color: #222;
+            color: #f4f4f4;
+            padding: 15px;
+            border-radius: 10px;
+            word-wrap: break-word;
+            margin-bottom: 30px;
+            display: none; /* Hidden by default */
+        }
+
+        .reveal-btn {
+            padding: 10px 20px;
+            background-color: #ff5e57;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .reveal-btn:hover {
+            background-color: #e04c42;
+        }
+
+        .reveal-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Welcome to the ARG</h1>
+        <p>Click the button to reveal your secret code:</p>
+        
+        <div class="code-box" id="codeBox">ARG2025-SECRET-CODE</div>
+
+        <button class="reveal-btn" onclick="revealCode()">Reveal Code</button>
+    </div>
+
+    <script>
+        // Function to reveal the code when the button is clicked
+        function revealCode() {
+            const codeBox = document.getElementById('codeBox');
+            codeBox.style.display = 'block'; // Show the code
+        }
+    </script>
+
+</body>
+</html>
