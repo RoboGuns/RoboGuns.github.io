@@ -13,37 +13,80 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: #f0f0f0;
+      background: linear-gradient(135deg, #74ebd5, #acb6e5);
+      font-family: Arial, sans-serif;
+      color: #333;
     }
-    .puzzle-container {
-      display: grid;
-      grid-template-columns: repeat(2, 100px);
-      grid-template-rows: repeat(2, 100px);
-      gap: 10px;
-    }
-    .triangle {
-      width: 0;
-      height: 0;
-      border-left: 50px solid transparent;
-      border-right: 50px solid transparent;
-      border-bottom: 100px solid blue;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-    }
-    .top-left { grid-area: 1 / 1; }
-    .top-right { grid-area: 1 / 2; }
-    .bottom-left { grid-area: 2 / 1; }
-    .bottom-right { grid-area: 2 / 2; }
+
     #puzzle-sequence {
       margin-bottom: 20px;
-      font-size: 18px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #2c3e50;
+      text-align: center;
     }
+
+    #puzzle-sequence a {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    #puzzle-sequence a:hover {
+      text-decoration: underline;
+    }
+
+    .puzzle-container {
+      display: grid;
+      grid-template-columns: repeat(2, 120px);
+      grid-template-rows: repeat(2, 120px);
+      gap: 15px;
+    }
+
+    .triangle {
+      position: relative;
+      width: 0;
+      height: 0;
+      border-left: 60px solid transparent;
+      border-right: 60px solid transparent;
+      border-bottom: 120px solid #2980b9;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .triangle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .triangle:active {
+      transform: scale(0.95);
+    }
+
     #result {
       margin-top: 20px;
-      color: red;
+      font-size: 18px;
       font-weight: bold;
+      color: #e74c3c;
+    }
+
+    #back-button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #back-button:hover {
+      background: #2980b9;
+    }
+
+    #back-button:active {
+      background: #1e6e94;
     }
   </style>
 </head>
@@ -59,50 +102,49 @@
 
   <div id="result"></div>
   <button id="back-button" onclick="window.location.href='../index.html';">Back</button>
+
   <script>
-const correctOrder = ["top-right", "top-right", "top-right", "top-right", "top-right", "top-right"]; //note that this is isn't the correct order simply a placeholder to keep to the set amount of clicks needed - ROB
-let clickedOrder = [];
+    const correctOrder = ["top-right", "top-right", "top-right", "top-right", "top-right", "top-right"];
+    let clickedOrder = [];
 
-const triangles = document.querySelectorAll(".triangle");
+    const triangles = document.querySelectorAll(".triangle");
 
-triangles.forEach(triangle => {
-  triangle.addEventListener("click", () => {
-    const order = triangle.dataset.order;
-    clickedOrder.push(order);
+    triangles.forEach(triangle => {
+      triangle.addEventListener("click", () => {
+        const order = triangle.dataset.order;
+        clickedOrder.push(order);
 
-    if (clickedOrder.length === correctOrder.length) {
-      fetch('https://roboguns-github-io.onrender.com/api/validate-sequence', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ sequence: clickedOrder }),
-        
-      })
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error('Invalid sequence');
-          }
-        })
-        .then(data => {
-          alert('Correct sequence! Redirecting...');
-          window.location.href = data.redirectUrl;
-        })
-        .catch(error => {
-          const resultDiv = document.getElementById('result');
-          resultDiv.textContent = 'Wrong sequence. Please try again.';
-          clickedOrder = [];
-        });
+        if (clickedOrder.length === correctOrder.length) {
+          fetch('https://roboguns-github-io.onrender.com/api/validate-sequence', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ sequence: clickedOrder }),
+          })
+            .then(response => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error('Invalid sequence');
+              }
+            })
+            .then(data => {
+              alert('Correct sequence! Redirecting...');
+              window.location.href = data.redirectUrl;
+            })
+            .catch(error => {
+              const resultDiv = document.getElementById('result');
+              resultDiv.textContent = 'Wrong sequence. Please try again.';
+              clickedOrder = [];
+            });
+        }
+
         if (clickedOrder.length > correctOrder.length) {
-  clickedOrder = [];
-}
-
-    }
-  });
-});
-console.log(clickedOrder);
+          clickedOrder = [];
+        }
+      });
+    });
   </script>
 </body>
 </html>
