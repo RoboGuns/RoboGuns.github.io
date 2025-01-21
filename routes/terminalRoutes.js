@@ -10,7 +10,7 @@ const loreCommands = {
   'ACCESS FILE 002': "File 002 unlocked. Experiment Lead: Subject Dr. S. Quinn. Status: **MIA. Last seen in foe condition.**",
   'ACCESS FILE 003': "Error: File 003 corrupted. Data irretrievable. To attempt recovery, use 'RECOVER' command followed by file number.",
   'RECOVER 003': "File 003 recovery cannot be initiated. please run the command again with proof of admin privileges.",
-  'ADMIN RECOVER 003': "File 003 recovery initiated. File restored. 3password = WeShouldBeSharing ",
+  'ADMIN RECOVER 003': "File 003 recovery initiated. File restored. 3 = WeShouldBeSharing ",
   'ACCESS FILE 004': "File 004 unlocked. Subject: Hive. **Excerpt:** 'Sustained exposure to the neural network destabilizes core personality fragments, leading to a uniform behavior among all subjects.'",
   HELP: "This console grants access to fragments of Project Hive's records. Use commands to retrieve available files or investigate system logs. Type 'HELP' to display this message.",
   'LS': "Available files: FILE 001, FILE 002, FILE 004. Corrupted files: FILE 003. Enter 'ACCESS FILE <number>' to view details.",

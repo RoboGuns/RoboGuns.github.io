@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Password for accessing the terminal
-const PASSWORD = "hive2023";
+const PASSWORD = "S-TACpass";
 
 // Password validation endpoint
 router.post('/validate-password', (req, res) => {

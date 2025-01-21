@@ -14,7 +14,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #6e7bff, #9c88ff);
+            background: linear-gradient(135deg, #7a7da3, #dcd6f7);
             color: white;
         }
 
@@ -50,19 +50,29 @@
             display: none; /* Hidden by default */
         }
 
-        .reveal-btn {
-            padding: 10px 20px;
-            background-color: #ff5e57;
-            color: white;
+        .reveal-btn, .email-input {
+            width: 100%;
+            padding: 10px;
             font-size: 1rem;
-            border: none;
             border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .email-input {
+            border: 1px solid #ddd;
+            outline: none;
+        }
+
+        .reveal-btn {
+            background-color: #099b59;
+            color: white;
+            border: none;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.1s ease;
         }
 
         .reveal-btn:hover {
-            background-color: #e04c42;
+            background-color: #3ba38b;
         }
 
         .reveal-btn:active {
@@ -73,19 +83,31 @@
 <body>
 
     <div class="container">
-        <h1>Welcome to the ARG</h1>
-        <p>Click the button to reveal your secret code:</p>
-        
-        <div class="code-box" id="codeBox">ARG2025-SECRET-CODE</div>
+        <h1>Welcome To User Sign Up!</h1>
+        <p>Enter your email address to reveal your secret code:</p>
 
+        <input type="email" id="emailInput" class="email-input" placeholder="Enter your email" required>
         <button class="reveal-btn" onclick="revealCode()">Reveal Code</button>
+
+        <div class="code-box" id="codeBox">S-TACpass</div>
     </div>
 
     <script>
         // Function to reveal the code when the button is clicked
         function revealCode() {
+            const emailInput = document.getElementById('emailInput');
             const codeBox = document.getElementById('codeBox');
-            codeBox.style.display = 'block'; // Show the code
+
+            // Simple email validation
+            const email = emailInput.value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
+
+            if (emailPattern.test(email)) {
+                codeBox.style.display = 'block'; // Show the code
+                emailInput.disabled = true; // Prevent further changes
+            } else {
+                alert('Please enter a valid email address.');
+            }
         }
     </script>
 
