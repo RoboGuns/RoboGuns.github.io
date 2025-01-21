@@ -6,7 +6,6 @@ const puzzleRoutes = require('./routes/puzzleRoutes'); // Import your puzzleRout
 const terminalRoutes = require('./routes/terminalRoutes');
 const passwordRoutes = require('./routes/passwordRoutes');
 const roleRoutes = require('./routes/roleRoutes');
-const webRoutes = require('./routes/webRoutes');
 const app = express();
 const port = process.env.PORT || 3000;
 
