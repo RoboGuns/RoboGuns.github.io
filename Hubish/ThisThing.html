@@ -40,7 +40,7 @@
     document.getElementById('submitBtn').addEventListener('click', async () => {
       const urlSequence = document.getElementById('urlInput').value.trim().split('\n');
       try {
-        const response = await fetch('https://roboguns-github-io.onrender.com/validate-pattern', {
+        const response = await fetch('https://roboguns-github-io.onrender.com/api/validate-pattern', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ urls: urlSequence })

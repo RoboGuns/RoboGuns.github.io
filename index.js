@@ -45,9 +45,10 @@ app.get('/api/secret', (req, res) => {
 
 // ==================== Wildcard Route ====================
 // This route will only handle requests that don't match any API route
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Hubish', 'SEARCHH.html'));
+app.use((req, res, next) => {
+  res.status(404).json({ error: 'Route not found' });
 });
+
 
 // Start the server
 app.listen(port, () => {
