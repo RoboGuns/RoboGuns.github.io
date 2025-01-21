@@ -22,4 +22,7 @@ const app = express();
 app.use(express.json()); // Parse JSON request bodies
 app.use('/api', router); // Use the router for API routes
 
-
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
