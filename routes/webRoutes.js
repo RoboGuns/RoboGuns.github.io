@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const app = express();
-const PORT = 3000;
+// Create a new router for the validation pattern logic
+const router = express.Router();
 
 // Correct URL sequence (adjust as needed)
 const correctSequence = [
@@ -12,9 +12,9 @@ const correctSequence = [
   'https://example.com/page4'
 ];
 
-app.use(bodyParser.json());
+router.use(bodyParser.json());
 
-app.post('/validate-pattern', (req, res) => {
+router.post('/validate-pattern', (req, res) => {
   const { urls } = req.body;
 
   if (!urls || !Array.isArray(urls)) {
@@ -31,6 +31,4 @@ app.post('/validate-pattern', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+module.exports = router;
