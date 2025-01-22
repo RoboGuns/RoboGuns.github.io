@@ -82,7 +82,8 @@
             headers: {
               "Content-Type": "application/json"
             },
-            body: JSON.stringify({ password: enteredPassword })
+            body: JSON.stringify({ password: enteredPassword }),
+            credentials: 'include' // ADD THIS LINE
           });
 
           if (response.ok) {
@@ -95,43 +96,73 @@
             throw new Error("Incorrect password");
           }
         } catch (error) {
-          passwordError.textContent = "Incorrect password. Try again.";
+          passwordError.textContent = "Incorrect password. Please try again.";
+          passwordError.style.display = "block";
         }
       });
 
-       // Handle Terminal Commands
-  terminalInput.addEventListener("keydown", async (event) => {
-    if (event.key === "Enter") {
-      const command = terminalInput.value.trim();
+      // Client-side handling for terminal commands
+      terminalInput.addEventListener("keydown", async (event) => {
+        if (event.key === "Enter") {
+          const command = terminalInput.value.trim();
 
-      if (!command) return; // Ignore empty commands
+          if (!command) return; // Ignore empty commands
 
-      // Display the entered command in the terminal
-      const userCommand = document.createElement("p");
-      userCommand.textContent = `> ${command}`;
-      terminalBody.appendChild(userCommand);
+          const userCommand = document.createElement("p");
+          userCommand.textContent = `> ${command}`;
+          terminalBody.appendChild(userCommand);
 
-      try {
-        const response = await fetch(`https://roboguns-github-io.onrender.com/api/terminal?command=${encodeURIComponent(command)}`);
-        const result = await response.json();
+          if (command.toUpperCase() === "REPAIR SYSTEM" || command.toUpperCase() === "SCAN") {
+            // Simulate a loading bar on the client side
+            let progress = 0;
+            const loadingBarLength = 20;
+            const interval = setInterval(() => {
+              progress += 5; // Increment progress
+              const filledBar = Math.floor((progress / 100) * loadingBarLength);
+              const emptyBar = loadingBarLength - filledBar;
 
-        const serverResponse = document.createElement("p");
-        serverResponse.textContent = `> ${result.response}`;
-        terminalBody.appendChild(serverResponse);
-      } catch (error) {
-        const errorResponse = document.createElement("p");
-        errorResponse.textContent = "> Error: Unable to process the command.";
-        errorResponse.style.color = "red";
-        terminalBody.appendChild(errorResponse);
-      }
+              const loadingBar = `[${'='.repeat(filledBar)}${' '.repeat(emptyBar)}] ${progress}%`;
+              const progressUpdate = document.createElement("p");
+              progressUpdate.textContent = loadingBar;
+              terminalBody.appendChild(progressUpdate);
 
-      terminalInput.value = "";
+              if (progress >= 100) {
+                clearInterval(interval);
 
-      terminalBody.scrollTop = terminalBody.scrollHeight;
-    }
-  });
-});
+                const completionMessage = command.toUpperCase() === "REPAIR SYSTEM"
+                  ? "Repair Complete: No further action required."
+                  : "Scan Complete: System integrity intact.";
+                const completionResponse = document.createElement("p");
+                completionResponse.textContent = completionMessage;
+                terminalBody.appendChild(completionResponse);
+              }
 
+              terminalBody.scrollTop = terminalBody.scrollHeight;
+            }, 500); // Adjust speed as needed
+          } else {
+            // Handle other commands via the backend
+            try {
+              const response = await fetch(`https://roboguns-github-io.onrender.com/api/terminal?command=${encodeURIComponent(command)}`, {
+                credentials: 'include' // ADD THIS LINE
+              });
+              const result = await response.json();
+
+              const serverResponse = document.createElement("p");
+              serverResponse.textContent = `> ${result.response}`;
+              terminalBody.appendChild(serverResponse);
+            } catch (error) {
+              const errorResponse = document.createElement("p");
+              errorResponse.textContent = "> Error: Unable to process the command.";
+              errorResponse.style.color = "red";
+              terminalBody.appendChild(errorResponse);
+            }
+          }
+
+          terminalInput.value = ""; // Clear the input
+          terminalBody.scrollTop = terminalBody.scrollHeight; // Scroll to the bottom
+        }
+      });
+    });
   </script>
 </body>
 </html>

@@ -23,12 +23,13 @@ app.use(cors({
 
 app.use(cookieParser()); // Initialize cookie-parser
 app.use(session({
-  secret: 'your-secret-key-here', // Replace with a strong secret
+  secret: process.env.SESSION_SECRET || 'fallback-secret', // Always use environment variables
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // Set to true if using HTTPS
+    secure: process.env.NODE_ENV === 'production', // Auto-set for HTTPS in production
     httpOnly: true,
+    sameSite: 'lax', // Required for cross-origin cookies
     maxAge: 3600000 // 1 hour
   }
 }));

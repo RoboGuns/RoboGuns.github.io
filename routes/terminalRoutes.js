@@ -114,7 +114,7 @@ router.get('/terminal', (req, res) => {
   // Handle other commands
   if (loreCommands[command]) {
     const response = typeof loreCommands[command] === 'function'
-      ? loreCommands[command]()
+      ? loreCommands[command](userId) // ✅ Pass userId
       : loreCommands[command];
     return res.json({ response });
   }
