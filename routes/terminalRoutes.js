@@ -43,6 +43,17 @@ const loreCommands = {
   'SUDO': "sudo not needed, you are the hive.",
 };
 
+const adminCommands = ['ADMIN RECOVER 003', 'ADMIN DECRYPT 003'];
+
+function isAdmin(userId) {
+  // Mock admin check
+  return userId === 'admin';
+}
+
+if (adminCommands.includes(command) && !isAdmin(userId)) {
+  return res.json({ response: "Error: Insufficient permissions. Admin privileges required." });
+}
+
 // Endpoint to handle terminal commands
 router.get('/terminal', (req, res) => {
   const userId = req.query.userId || 'default'; // Mock user/session ID
