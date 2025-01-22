@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
+const cookieParser = require('cookie-parser'); // Add this
 const path = require('path');
 const puzzleRoutes = require('./routes/puzzleRoutes'); // Import your puzzleRoutes
 const terminalRoutes = require('./routes/terminalRoutes');
@@ -12,13 +13,27 @@ const port = process.env.PORT || 3000;
 // Access the secret from environment variables
 const mySecretKey = process.env.MY_SECRET_KEY;
 
+// Middleware setup
 app.use(cors({
   origin: 'https://roboguns.github.io',
   methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type'],
+  credentials: true // Allow cookies to be sent
 }));
-app.use(express.static('Hubish'));  // Serving static files
 
+app.use(cookieParser()); // Initialize cookie-parser
+app.use(session({
+  secret: 'your-secret-key-here', // Replace with a strong secret
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // Set to true if using HTTPS
+    httpOnly: true,
+    maxAge: 3600000 // 1 hour
+  }
+}));
+
+app.use(express.static('Hubish'));  // Serving static files
 app.use(express.json());  // Middleware to parse JSON
 
 // ==================== API Routes ====================
@@ -48,8 +63,7 @@ app.use((req, res, next) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-
 // Start the server
 app.listen(port, () => {
-  console.log(`Backend running at http://localhost:${port}`);
+  console.log(`Server is running on port ${port}`);
 });
