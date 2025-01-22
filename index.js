@@ -21,17 +21,20 @@ app.use(cors({
   credentials: true // Allow cookies to be sent
 }));
 
+app.set('trust proxy', 1); // Trust first proxy
+
 app.use(cookieParser()); // Initialize cookie-parser
 app.use(session({
   secret: process.env.SESSION_SECRET || 'fallback-secret', // Always use environment variables
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.NODE_ENV === 'production', // Auto-set for HTTPS in production
+    secure: true, // Must be true for SameSite=None
     httpOnly: true,
     sameSite: 'none', // Required for cross-origin cookies
     maxAge: 3600000 // 1 hour
-  }
+  },
+  proxy: true // Add this line for reverse proxy setups
 }));
 
 app.use(express.static('Hubish'));  // Serving static files
