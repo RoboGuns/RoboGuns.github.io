@@ -9,8 +9,8 @@ const loreCommands = {
   'ACCESS FILE 001': "File 001 unlocked. Subject: Dr. S. Quinn. **Recovered Log:** 'Exposing Flesh to the Spore seems to accelerate the process.'",
   'ACCESS FILE 002': "File 002 unlocked. Experiment Lead: Subject Dr. S. Quinn. Status: **MIA. Last seen in foe condition.**",
   'ACCESS FILE 003': "Error: File 003 corrupted. Data irretrievable. To attempt recovery, use 'RECOVER' command followed by file number.",
-  'RECOVER 003': "File 003 recovery cannot be initiated. please run the command again with proof of admin privileges.",
-  'ADMIN RECOVER 003': "File 003 recovery initiated. File restored. 3 = WeShouldBeSharing ",
+  'RECOVER 003': "File 003 recovery cannot be initiated. Please run the command again with proof of admin privileges.",
+  'ADMIN RECOVER 003': "File 003 recovery initiated. File restored. 3 = WeShouldBeSharing",
   'ACCESS FILE 004': "File 004 unlocked. Subject: Hive. **Excerpt:** 'Sustained exposure to the neural network destabilizes core personality fragments, leading to a uniform behavior among all subjects.'",
   HELP: "This console grants access to fragments of Project Hive's records. Use commands to retrieve available files or investigate system logs. Type 'HELP' to display this message.",
   'LS': "Available files: FILE 001, FILE 002, FILE 004. Corrupted files: FILE 003. Enter 'ACCESS FILE <number>' to view details.",
@@ -18,10 +18,10 @@ const loreCommands = {
   'SYSTEM STATUS': "Hive Neural Interface: Offline. Network Nodes: 2 operational, 12 corrupted. Threat Level: Contained.",
   'LIST ACTIVE USERS': "Active connections: 2. User ID: B-Spore (you), User ID: UNKNOWN. Warning: Unauthorized user detec- *System relax*.",
   'SYSTEM REBOOT': "System reboot initiated. Warning: Temporary data loss may occur. Proceed with caution. (Type 'CONFIRM REBOOT' to continue.)",
-  'CONFIRM REBOOT': "No reboot process initiated. Type 'SYSTEM REBOOT' to start.", 
+  'CONFIRM REBOOT': "No reboot process initiated. Type 'SYSTEM REBOOT' to start.",
   'WHOAMI': "User ID: USER. Access Level: Minimum. Last login: 3 minutes ago. Location: [REDACTED].",
-  'UPTIME': "System uptime: 13 days, 7 hours, 42 minutes. Last reboot: [Currupted].",
-  'PING HIVE CORE': "Pinging... Response from Hive Core receved. Status: Expanding. Cause: Node corruption.",
+  'UPTIME': "System uptime: 13 days, 7 hours, 42 minutes. Last reboot: [Corrupted].",
+  'PING HIVE CORE': "Pinging... Response from Hive Core received. Status: Expanding. Cause: Node corruption.",
   'TRACE ROUTE': "Tracing route to external connections... Hop 1: Success. Hop 2: UNKNOWN NODE DETECTED. Terminating trace for security reasons.",
   'LOGOFF': "Logging off... Warning: Unfinished session data may be lost. Goodbye.",
   'DIAGNOSTICS': "System Check: 5 errors detected. Critical: Hive neural interface offline.",
@@ -38,45 +38,54 @@ const loreCommands = {
   'WHO WAS HERE': "Previous users: Dr. S. Quinn, Subject Delta, UNKNOWN ENTITY. Last login: Before the HIVE.",
   'REPAIR SYSTEM': "Repair initiated... Progress: 2%. Error: Core files missing. Repair halted.",
   'TOP': "System processes: 3 active processes. High resource usage detected: Process 'hive-core' consuming 80% CPU.",
-  'CD': "The hive is everything. there is no need to navigate.",
+  'CD': "The hive is everything. There is no need to navigate.",
   'RM -RF': "Deleting files... Error: Insufficient permissions. File 'hive-core' cannot be deleted, it never will be.",
   'SUDO': "sudo not needed, you are the hive.",
 };
 
+// Admin commands that require special privileges
+const adminCommands = ['ADMIN RECOVER 003', 'ADMIN DECRYPT 003'];
 
+// Function to check if the user is an admin
+function isAdmin(userId) {
+  return userId === 'admin';
+}
 
 // Endpoint to handle terminal commands
 router.get('/terminal', (req, res) => {
   const userId = req.query.userId || 'default'; // Mock user/session ID
   const command = req.query.command?.toUpperCase() || ''; // Get the command from query params
-  const adminCommands = ['ADMIN RECOVER 003', 'ADMIN DECRYPT 003'];
 
-  function isAdmin(userId) {
-    // Mock admin check
-    return userId === 'admin';
-  }
-  
+  console.log(`User ID: ${userId}, Command: ${command}`); // Debugging line
+
+  // Check if the command is an admin command and if the user is an admin
   if (adminCommands.includes(command) && !isAdmin(userId)) {
-    return res.json({ response: "Error: Insufficient permissions. Admin privileges required." });
+    return res.status(403).json({ response: "Error: Insufficient permissions. Admin privileges required." });
   }
-  
+
   // Check if the user has pending confirmation for 'CONFIRM REBOOT'
   if (command === 'CONFIRM REBOOT' && commandState[userId]?.pendingReboot) {
     delete commandState[userId]; // Clear pending state
     return res.json({ response: "Rebooting system... Error: Core files missing. Reboot failed." });
   }
+
+  // Handle 'TIME' command
   if (command === 'TIME') {
     const currentCETTime = new Date().toLocaleString("en-GB", { timeZone: "Europe/Berlin", hour12: false });
     return res.json({ response: `System time (CET): ${currentCETTime}` });
   }
+
   // Handle 'SYSTEM REBOOT' to set pending state
   if (command === 'SYSTEM REBOOT') {
     commandState[userId] = { pendingReboot: true };
     return res.json({ response: loreCommands['SYSTEM REBOOT'] });
   }
+
+  // Handle 'LOGOFF' command
   if (command === 'LOGOFF') {
     return res.json({ response: loreCommands.LOGOFF, logoff: true });
   }
+
   // Fallback to regular commands
   const response = loreCommands[command] || "Unknown command. Type 'HELP' for a list of commands.";
   res.json({ response });
