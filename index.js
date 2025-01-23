@@ -47,7 +47,8 @@ app.use(express.json());  // Middleware to parse JSON
 app.use('/api', puzzleRoutes);  // Make sure puzzleRoutes is handling /api/validate-sequence
 app.use('/api', terminalRoutes);
 app.use('/api', passwordRoutes); 
-app.use('/api', sequenceRoutes); // This line is missing in your code 
+app.use('/api', sequenceRoutes); 
+app.use('/api', roleRoutes); 
 // Example route for search API
 app.get('/api/search', (req, res) => {
   const query = req.query.q; // Get the search term from the query parameter

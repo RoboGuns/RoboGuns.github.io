@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Hardcoded passwords (for demo/ARG purposes only)
 const USER_PASSWORD = "S-TACpass"; // Regular user password
-const ADMIN_PASSWORD = "ADMIN-ENTRY9490"; // Admin password (hardcoded)
+const ADMIN_PASSWORD = "36117"; // Admin password (hardcoded)
 
 // Password validation endpoint
 router.post('/validate-password', (req, res) => {

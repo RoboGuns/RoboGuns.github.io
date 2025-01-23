@@ -83,7 +83,6 @@
             <pre>
 [Prime Anchor]    : Subject birthdate
 [Secondary Anchor]: First memory of <span class="redacted">█████</span>
-[Tertiary Anchor] : Coordinates 39°N 77°W ±3s
             </pre>
             <p class="pulse">// Do NOT anchor to post-Event 9 timelines</p>
         </div>
@@ -113,12 +112,6 @@
         HIVE CORRUPTION: <span id="corruption">32.1%</span> ▲
     </div>
 
-    <!-- Hidden ARG Elements -->
-    <div style="display:none">
-        <p id="secret">3Xv3ry7h1n6C0nn3c73d</p>
-        <a id="hiddenLink" href="/index.html"></a>
-    </div>
-
     <script>
         // Dynamic corruption % (changes on refresh)
         document.getElementById('corruption').textContent = 
@@ -130,7 +123,7 @@
             clickCount++;
             if(clickCount === 3) {
                 document.getElementById('map').innerHTML = 
-                    `<div style="color:red">COORDINATES FOUND: 39°53'N 77°02'W</div>`;
+                    `<div style="color:red">OUR COORDINATES: 65, 59</div>`;
                 setTimeout(() => {
                     window.location = atob(document.getElementById('secret').innerText);
                 }, 2000);
