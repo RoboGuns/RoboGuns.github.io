@@ -1,35 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-// Correct answers
-const correctAnswers = {
-  q1: 'B',
-  q2: 'B',
-  q3: 'B',
-  q4: 'B',
-  q5: 'B',
-};
+const correctOrder = ["top-right", "bottom-right", "top-right", "bottom-right", "bottom-left", "top-left"];
 
-// Quiz validation endpoint
-router.post('/validate-quiz', (req, res) => {
-  const userAnswers = req.body;
-  let isCorrect = true;
+router.post('/validate-sequence', (req, res) => {
+    const { sequence } = req.body;
 
-  // Check each answer
-  for (const question in correctAnswers) {
-    if (userAnswers[question] !== correctAnswers[question]) {
-      isCorrect = false;
-      break;
+    if (JSON.stringify(sequence) === JSON.stringify(correctOrder)) {
+        return res.json({
+            message: 'Correct sequence!',
+            redirectUrl: 'https://roboguns.github.io/Hubish/Forbidden.html',
+        });
+    } else {
+        return res.status(400).json({ message: 'Invalid sequence' });
     }
-  }
-
-  // Send response
-  if (isCorrect) {
-    res.json({ success: true, message: "Congratulations! You got all the answers correct!" });
-  } else {
-    res.json({ success: false, message: "Some answers are incorrect. Try again!" });
-  }
 });
 
-// Export the router
 module.exports = router;
