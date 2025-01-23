@@ -17,8 +17,4 @@ router.post('/keyword', (req, res) => {
   res.json({ response });
 });
 
-// Express app setup
-const app = express();
-app.use(express.json()); // Parse JSON request bodies
-app.use('/api', router); // Use the router for API routes
-
+module.exports = router;
