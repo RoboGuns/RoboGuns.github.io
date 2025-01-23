@@ -10,25 +10,48 @@
       background-color: #1e1e1e;
       color: #ffffff;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
+      overflow: hidden;
     }
-    .container {
+    .numbers {
+      font-size: 10rem;
+      font-weight: bold;
+      color: #ff4444;
       text-align: center;
-      background-color: #2d2d2d;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      margin: 0;
+      position: relative;
+      height: 120px; 
     }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
+    .number {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      animation: appearDisappear 7s infinite;
     }
-    p {
-      font-size: 18px;
-      margin-bottom: 20px;
+
+    .number:nth-child(1) { animation-delay: 0s; }
+    .number:nth-child(2) { animation-delay: 1s; }
+    .number:nth-child(3) { animation-delay: 2s; }
+    .number:nth-child(4) { animation-delay: 3s; }
+    .number:nth-child(5) { animation-delay: 4s; }
+    .number:nth-child(6) { animation-delay: 5s; }
+    .number:nth-child(7) { animation-delay: 6s; }
+    @keyframes appearDisappear {
+      0%, 14% { opacity: 0; } 
+      15%, 28% { opacity: 1; } 
+      29%, 100% { opacity: 0; } 
+    }
+    .input-container {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
     }
     input {
       padding: 10px;
@@ -37,6 +60,8 @@
       border-radius: 5px;
       background-color: #333;
       color: #fff;
+      width: 300px;
+      margin-right: 10px;
     }
     button {
       padding: 10px 20px;
@@ -46,23 +71,29 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-top: 10px;
     }
     button:hover {
       background-color: #45a049;
     }
     .message {
-      margin-top: 20px;
+      margin-top: 10px;
       font-size: 18px;
       color: #ff4444;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Decode the Numbers</h1>
-    <p>Clue: The numbers correspond to letters in the alphabet (A=1, B=2, etc.).</p>
-    <p>Decode the following sequence: <strong>3-15-18-18-5-3-20</strong></p>
+  <div class="numbers">
+    <div class="number">3</div>
+    <div class="number">15</div>
+    <div class="number">18</div>
+    <div class="number">18</div>
+    <div class="number">5</div>
+    <div class="number">3</div>
+    <div class="number">20</div>
+  </div>
+
+  <div class="input-container">
     <input type="text" id="password" placeholder="Enter the decoded word">
     <button onclick="submitPassword()">Submit</button>
     <p id="message" class="message"></p>
@@ -88,7 +119,7 @@
           messageElement.textContent = data.message;
           messageElement.style.color = "#4CAF50";
           setTimeout(() => {
-            window.location.href = data.redirectUrl; // Redirect to the next page
+            window.location.href = data.redirectUrl; 
           }, 2000);
         } else {
           messageElement.textContent = data.message;

@@ -7,7 +7,7 @@ const CORRECT_PASSWORD = "CORRECT";
 router.post('/validate-phrase', (req, res) => {
   const { password } = req.body;
   if (password === CORRECT_PASSWORD) {
-    res.json({ success: true, message: "Access granted", redirectUrl: 'https://example.com/next-page' });
+    res.json({ success: true, message: "Access granted", redirectUrl: 'https://roboguns.github.io/Hubish/Newusersignup.html' });
   } else {
     res.status(401).json({ success: false, message: "Incorrect password" });
   }

@@ -8,6 +8,7 @@ const terminalRoutes = require('./routes/terminalRoutes');
 const passwordRoutes = require('./routes/passwordRoutes');
 const roleRoutes = require('./routes/roleRoutes');
 const sequenceRoutes = require('./routes/sequenceRoutes');
+const quizRoutes = require('./routes/quizRoutes');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -49,6 +50,7 @@ app.use('/api', terminalRoutes);
 app.use('/api', passwordRoutes); 
 app.use('/api', sequenceRoutes); 
 app.use('/api', roleRoutes); 
+app.use('/api', quizRoutes);
 // Example route for search API
 app.get('/api/search', (req, res) => {
   const query = req.query.q; // Get the search term from the query parameter
