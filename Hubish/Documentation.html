@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TAC TEMPORAL NAVIGATION PRIMER (v.9.4.3-ψ)</title>
+    <style>
+        :root { --glow: #00ff00; }
+        body {
+            background: #000;
+            color: var(--glow);
+            font-family: monospace;
+            margin: 0;
+            padding: 2rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            border: 1px solid var(--glow);
+            padding: 1rem;
+        }
+        .section {
+            border: 1px dashed var(--glow);
+            padding: 1rem;
+            position: relative;
+        }
+        .section:hover::after {
+            content: "CLASSIFIED";
+            position: absolute;
+            bottom: -1.2rem;
+            right: 0;
+            font-size: 0.8em;
+            color: #ff0000;
+        }
+        .redacted {
+            background: black;
+            color: transparent;
+            position: relative;
+        }
+        .redacted:hover {
+            color: var(--glow);
+            cursor: pointer;
+        }
+        #hiveCounter {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8em;
+        }
+        .glyph {
+            font-family: 'Wingdings';
+            cursor: help;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="pulse">»» TAC TEMPORAL COMPLIANCE FRAMEWORK ««</h1>
+    
+    <div class="grid">
+        <!-- New ARG Section: Echo Protocols -->
+        <div class="section">
+            <h2>Δ-ECHO PROTOCOLS <span class="glyph" title="Requires L4 Clearance"></span></h2>
+            <p>All temporal jumps must leave <span class="redacted">chrono-signatures</span> using:</p>
+            <ul>
+                <li>3-phase resonance alignment</li>
+                <li>Neural timestamping (v.2.1.9+)</li>
+                <li><span class="redacted">[REDACTED]</span> harmonic suppression</li>
+            </ul>
+            <p><em>Warning:</em> Failure creates <span class="redacted">echo fractures</span> exploitable by <span class="glyph"></span> entities.</p>
+        </div>
+
+        <!-- New ARG Section: Anchor Mechanics -->
+        <div class="section">
+            <h2>» NON-LINEAR ANCHORING «</h2>
+            <p>Temporal stability requires:</p>
+            <pre>
+[Prime Anchor]    : Subject birthdate
+[Secondary Anchor]: First memory of <span class="redacted">█████</span>
+[Tertiary Anchor] : Coordinates 39°N 77°W ±3s
+            </pre>
+            <p class="pulse">// Do NOT anchor to post-Event 9 timelines</p>
+        </div>
+
+        <!-- Hidden ARG Interaction: Glitch Map -->
+        <div class="section" onclick="revealGrid()" style="cursor: help">
+            <h2>»» GLITCH TOPOGRAPHY ««</h2>
+            <div id="map" style="height: 150px; border: 1px solid var(--glow)">
+                <!-- Hidden Base64 image: -->
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" 
+                     style="width:100%; opacity:0.1">
+            </div>
+            <p style="font-size:0.8em">(Click to stabilize)</p>
+        </div>
+
+        <!-- New ARG Section: Paradox Resolutions -->
+        <div class="section">
+            <h2>PARADOX RESOLUTION MATRIX</h2>
+            <table>
+                <tr><th>Type</th><th>Code</th><th>Mortality Rate</th></tr>
+                <tr><td>Autoinfanticide</td><td>Ω-9</td><td>98.7%</td></tr>
+                <tr><td>Knowledge Loop</td><td>ξ-4</td><td><span class="redacted">[DATA EXPUNGED]</span></td></tr>
+                <tr><td><span class="glyph"></span> Contamination</td><td>Ψ-0</td><td>N/A</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Dynamic HIVE Counter -->
+    <div id="hiveCounter">
+        HIVE CORRUPTION: <span id="corruption">32.1%</span> ▲
+    </div>
+
+    <!-- Hidden ARG Elements -->
+    <div style="display:none">
+        <p id="secret">3Xv3ry7h1n6C0nn3c73d</p>
+        <a id="hiddenLink" href="/ProjectLazarus"></a>
+    </div>
+
+    <script>
+        // Dynamic corruption % (changes on refresh)
+        document.getElementById('corruption').textContent = 
+            (Math.random()*40 + 15).toFixed(1) + '%';
+
+        // Glitch Map interaction
+        let clickCount = 0;
+        function revealGrid() {
+            clickCount++;
+            if(clickCount === 3) {
+                document.getElementById('map').innerHTML = 
+                    `<div style="color:red">COORDINATES FOUND: 39°53'N 77°02'W</div>`;
+                setTimeout(() => {
+                    window.location = atob(document.getElementById('secret').innerText);
+                }, 2000);
+            }
+        }
+
+        // Redacted text hover-decrypt
+        document.querySelectorAll('.redacted').forEach(el => {
+            el.addEventListener('mouseover', () => {
+                el.style.textShadow = '0 0 10px var(--glow)';
+            });
+        });
+    </script>
+</body>
+</html>
