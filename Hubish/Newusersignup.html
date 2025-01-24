@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/backbutton.css">
     <title>ARG Code Revealer</title>
     <style>
         /* Basic reset and layout */
@@ -81,7 +82,15 @@
     </style>
 </head>
 <body>
-
+    <button id="back-button" onclick="window.location.href='CodeSpit.html';">Back</button>
+    <button id="start-music">Start Music</button>
+    
+  
+  <script src="/JavaScripts/Start Music.js"></script>
+  <audio id="background-music" loop>
+    <source src="Audio/ゆめはいつもベランダから.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
     <div class="container">
         <h1>Welcome To User Sign Up!</h1>
         <p>Enter your email address to reveal your User Code!</p>
@@ -93,18 +102,18 @@
     </div>
 
     <script>
-        // Function to reveal the code when the button is clicked
+
         function revealCode() {
             const emailInput = document.getElementById('emailInput');
             const codeBox = document.getElementById('codeBox');
 
             // Simple email validation
             const email = emailInput.value;
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 
             if (emailPattern.test(email)) {
-                codeBox.style.display = 'block'; // Show the code
-                emailInput.disabled = true; // Prevent further changes
+                codeBox.style.display = 'block'; 
+                emailInput.disabled = true; 
             } else {
                 alert('Please enter a valid email address.');
             }

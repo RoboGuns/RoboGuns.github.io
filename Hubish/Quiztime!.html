@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/css/backbutton.css">
   <title>Quiz Time!</title>
   <style>
     body {
@@ -84,6 +85,14 @@
   </style>
 </head>
 <body>
+  <button id="back-button" onclick="window.location.href='Future';">Back</button>
+  <button id="start-music">Start Music</button>
+  
+<script src="/JavaScripts/Start Music.js"></script>
+<audio id="background-music" loop>
+  <source src="Audio/13 Pieces, Op. 76_ No. 2 Etude.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
   <div class="quiz-container">
     <h1>Quiz Time!</h1>
     <div id="timer" class="message"></div>

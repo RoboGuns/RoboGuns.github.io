@@ -31,24 +31,32 @@
     </style>
   </head>
   <body>
+    <button id="back-button" onclick="window.location.href='/index';">Back to hub</button>
+    <button id="start-music">Start Music</button>
+    
+  
+  <script src="/JavaScripts/Start Music.js"></script>
+  <audio id="background-music" loop>
+    <source src="Audio/Equinox.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
     <h1>Test if backend is online</h1>
     <p>If nothing shows up when apple is written it isn't up yet give it a second.</p>
     <input type="text" id="searchBar" placeholder="TYPE APPLE">
     <button onclick="search()">Search</button>
 
     <div id="result">
-      <!-- Result will be displayed here -->
+
     </div>
 
     <script>
       function search() {
-        const query = document.getElementById('searchBar').value;  // Get the value from the search bar
+        const query = document.getElementById('searchBar').value;  
         
-        // Update the fetch URL to your deployed backend on Render
         fetch(`https://roboguns-github-io.onrender.com/api/search?q=${query}`)
-          .then(response => response.json())  // Parse the response as JSON
+          .then(response => response.json())  
           .then(data => {
-            document.getElementById('result').textContent = `Result: ${data.result}`;  // Display the result
+            document.getElementById('result').textContent = `Result: ${data.result}`;  
           })
           .catch(error => {
             console.error('Error:', error);
