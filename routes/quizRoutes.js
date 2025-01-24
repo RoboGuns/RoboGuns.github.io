@@ -3,12 +3,12 @@ const router = express.Router();
 
 // Correct answers
 const correctAnswers = {
-  q1: 'B',
-  q2: 'B',
-  q3: 'B',
-  q4: 'B',
-  q5: 'B',
-  q6: 'B',
+  q1: 'C',
+  q2: 'A',
+  q3: 'C',
+  q4: 'C',
+  q5: 'C',
+  q6: 'D',
 };
 
 // Quiz validation endpoint
@@ -26,7 +26,7 @@ router.post('/validate-quiz', (req, res) => {
 
   // Send response
   if (isCorrect) {
-    res.json({ success: true, message: "Congratulations! You got all the answers correct!" });
+    res.json({ success: true, message: "5 = AdaptOvercome" });
   } else {
     res.json({ success: false, message: "Some answers are incorrect. Try again!" });
   }
