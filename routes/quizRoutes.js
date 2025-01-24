@@ -8,6 +8,7 @@ const correctAnswers = {
   q3: 'B',
   q4: 'B',
   q5: 'B',
+  q6: 'B',
 };
 
 // Quiz validation endpoint

@@ -1,145 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Time!</title>
+  <!-- ... (keep existing head content) ... -->
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #1e1e1e;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      margin: 0;
-    }
-    .quiz-container {
-      background-color: #2d2d2d;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      max-width: 500px;
-      width: 100%;
-    }
-    h1 {
-      text-align: center;
-      color: #4CAF50;
-    }
-    .question {
+    /* Add to existing styles */
+    #timer {
+      font-size: 1.2em;
       margin-bottom: 20px;
     }
-    .question p {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-    .options label {
-      display: block;
-      margin: 5px 0;
-      padding: 10px;
-      background-color: #444;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .options label:hover {
-      background-color: #555;
-    }
-    .options input[type="radio"] {
-      margin-right: 10px;
-    }
-    button {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    .message {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 18px;
-      color: #4CAF50;
-    }
-    .message.error {
-      color: #ff4444;
+    .disabled-form {
+      opacity: 0.5;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
   <div class="quiz-container">
     <h1>Quiz Time!</h1>
+    <div id="timer" class="message"></div>
     <form id="quizForm">
-      <!-- Question 1 -->
-      <div class="question">
-        <p>1. What is the capital of France?</p>
-        <div class="options">
-          <label><input type="radio" name="q1" value="A"> Berlin</label>
-          <label><input type="radio" name="q1" value="B"> Paris</label>
-          <label><input type="radio" name="q1" value="C"> Madrid</label>
-          <label><input type="radio" name="q1" value="D"> Rome</label>
+        <!-- Question 1 -->
+        <div class="question">
+          <p>1. What is the name of the bunker where the black spore originated?</p>
+          <div class="options">
+            <label><input type="radio" name="q1" value="A"> Hunker Bunker</label>
+            <label><input type="radio" name="q1" value="B"> BioLab-Tech</label>
+            <label><input type="radio" name="q1" value="C"> Bunker-J</label>
+            <label><input type="radio" name="q1" value="D"> Bioweapons-J</label>
+          </div>
         </div>
-      </div>
-
-      <!-- Question 2 -->
-      <div class="question">
-        <p>2. Which planet is known as the Red Planet?</p>
-        <div class="options">
-          <label><input type="radio" name="q2" value="A"> Venus</label>
-          <label><input type="radio" name="q2" value="B"> Mars</label>
-          <label><input type="radio" name="q2" value="C"> Jupiter</label>
-          <label><input type="radio" name="q2" value="D"> Saturn</label>
+  
+        <!-- Question 2 -->
+        <div class="question">
+          <p>2. What was the name if your tour guide?</p>
+          <div class="options">
+            <label><input type="radio" name="q2" value="A"> William</label>
+            <label><input type="radio" name="q2" value="B"> James</label>
+            <label><input type="radio" name="q2" value="C"> Vex</label>
+            <label><input type="radio" name="q2" value="D"> Gluurb</label>
+          </div>
         </div>
-      </div>
-
-      <!-- Question 3 -->
-      <div class="question">
-        <p>3. What is the largest mammal in the world?</p>
-        <div class="options">
-          <label><input type="radio" name="q3" value="A"> Elephant</label>
-          <label><input type="radio" name="q3" value="B"> Blue Whale</label>
-          <label><input type="radio" name="q3" value="C"> Giraffe</label>
-          <label><input type="radio" name="q3" value="D"> Dolphin</label>
+  
+        <!-- Question 3 -->
+        <div class="question">
+          <p>3. What is the worst type of foe to encounter?</p>
+          <div class="options">
+            <label><input type="radio" name="q3" value="A"> Regular form</label>
+            <label><input type="radio" name="q3" value="B"> Fetus from</label>
+            <label><input type="radio" name="q3" value="C"> Enraged from</label>
+            <label><input type="radio" name="q3" value="D"> Demented form</label>
+          </div>
         </div>
-      </div>
-
-      <!-- Question 4 -->
-      <div class="question">
-        <p>4. Who wrote "Romeo and Juliet"?</p>
-        <div class="options">
-          <label><input type="radio" name="q4" value="A"> Charles Dickens</label>
-          <label><input type="radio" name="q4" value="B"> William Shakespeare</label>
-          <label><input type="radio" name="q4" value="C"> Mark Twain</label>
-          <label><input type="radio" name="q4" value="D"> Jane Austen</label>
+  
+        <!-- Question 4 -->
+        <div class="question">
+          <p>4. How does HappyCampers.co gain their tour guides?</p>
+          <div class="options">
+            <label><input type="radio" name="q4" value="A"> Hire them</label>
+            <label><input type="radio" name="q4" value="B"> Pull them from the past</label>
+            <label><input type="radio" name="q4" value="C"> Cloning vats</label>
+            <label><input type="radio" name="q4" value="D"> Forced Hostage</label>
+          </div>
         </div>
-      </div>
-
-      <!-- Question 5 -->
-      <div class="question">
-        <p>5. What is the chemical symbol for water?</p>
-        <div class="options">
-          <label><input type="radio" name="q5" value="A"> CO2</label>
-          <label><input type="radio" name="q5" value="B"> H2O</label>
-          <label><input type="radio" name="q5" value="C"> O2</label>
-          <label><input type="radio" name="q5" value="D"> NaCl</label>
+  
+        <!-- Question 5 -->
+        <div class="question">
+          <p>5. What is the black spore considered to be?</p>
+          <div class="options">
+            <label><input type="radio" name="q5" value="A"> A Virus</label>
+            <label><input type="radio" name="q5" value="B"> A Spore</label>
+            <label><input type="radio" name="q5" value="C"> A Fungus</label>
+            <label><input type="radio" name="q5" value="D"> An Animal</label>
+          </div>
         </div>
-      </div>
-
-      <button type="submit">Submit Answers</button>
-    </form>
-
-    <div id="message" class="message"></div>
+        <!-- Question 6 -->
+        <div class="question">
+          <p>6. What is the hive?</p>
+          <div class="options">
+            <label><input type="radio" name="q6" value="A"> A plague</label>
+            <label><input type="radio" name="q6" value="B"> A monster</label>
+            <label><input type="radio" name="q6" value="C"> A cancer</label>
+            <label><input type="radio" name="q6" value="D"> THe best thing ever</label>
+          </div>
+        </div>
+  
+        <button type="submit">Submit Answers</button>
+      </form>
+  
+      <div id="message" class="message"></div>
+    </div>
   </div>
-
   <script>
     const quizForm = document.getElementById('quizForm');
     const messageElement = document.getElementById('message');
@@ -154,6 +104,7 @@
         q3: quizForm.q3.value,
         q4: quizForm.q4.value,
         q5: quizForm.q5.value,
+        q6: quizForm.q6.value,
       };
 
       try {
@@ -180,6 +131,78 @@
         messageElement.textContent = "An error occurred. Please try again.";
         messageElement.classList.add('error');
       }
+    });
+  </script>
+  <script>
+    const timerElement = document.getElementById('timer');
+    let updateInterval;
+
+    function calculateValidTimes() {
+      const now = new Date();
+      const currentMinutes = now.getMinutes();
+      const currentWindow = Math.floor(currentMinutes / 10) * 10;
+      
+      const windowStart = new Date(now);
+      windowStart.setMinutes(currentWindow, 0, 0);
+      
+      const windowEnd = new Date(windowStart);
+      windowEnd.setMinutes(windowStart.getMinutes() + 10);
+
+      return { now, windowStart, windowEnd };
+    }
+
+    function updateTimerDisplay() {
+      const { now, windowStart, windowEnd } = calculateValidTimes();
+      
+      if (now >= windowStart && now < windowEnd) {
+        // Active window
+        quizForm.classList.remove('disabled-form');
+        const timeLeft = windowEnd - now;
+        const minutes = Math.floor(timeLeft / 60000);
+        const seconds = Math.floor((timeLeft % 60000) / 1000).toString().padStart(2, '0');
+        timerElement.innerHTML = `⏳ Submission window open for ${minutes}:${seconds}<br>
+                                 Next window at ${formatNextWindow(windowEnd)}`;
+        timerElement.classList.remove('error');
+      } else {
+        // Inactive window
+        quizForm.classList.add('disabled-form');
+        const nextWindow = new Date(windowStart);
+        nextWindow.setMinutes(windowStart.getMinutes() + 10);
+        
+        const timeUntilNext = nextWindow - now;
+        const hours = nextWindow.getHours().toString().padStart(2, '0');
+        const minutes = nextWindow.getMinutes().toString().padStart(2, '0');
+        
+        timerElement.innerHTML = `⌛ Next submission window:<br>
+                                 <strong>${hours}:${minutes}</strong>`;
+        timerElement.classList.add('error');
+      }
+    }
+
+    function formatNextWindow(date) {
+      return date.toLocaleTimeString([], { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: true
+      }).toUpperCase();
+    }
+
+    // Initial setup
+    document.addEventListener('DOMContentLoaded', () => {
+      updateTimerDisplay();
+      updateInterval = setInterval(updateTimerDisplay, 1000);
+    });
+
+    quizForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const { now, windowStart, windowEnd } = calculateValidTimes();
+
+      if (now < windowStart || now >= windowEnd) {
+        alert('Submissions are only allowed during 10-minute windows!');
+        return;
+      }
+
+      // ... (rest of your existing submission code) ...
     });
   </script>
 </body>
