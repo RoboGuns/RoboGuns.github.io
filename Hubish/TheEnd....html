@@ -79,14 +79,14 @@
     </style>
 </head>
 <body>
-    <div class="title">CHOOSE YOUR REALITY</div>
+    <div class="title">Make the Choice</div>
     <div class="choices">
-        <div class="choice" onclick="makeChoice(1)">ASCEND TO TRANSCENDENCE</div>
-        <div class="choice" onclick="makeChoice(2)">EMBRACE THE VOID</div>
-        <div class="choice" onclick="makeChoice(3)">RETURN TO THE SIMULATION</div>
+        <div class="choice" onclick="makeChoice(1)">JOIN THE TAC CAUSE</div>
+        <div class="choice" onclick="makeChoice(2)">DO NOTHING AND CONTINUE</div>
+        <div class="choice" onclick="makeChoice(3)">JOIN THE HIVE, FOREVER</div>
     </div>
     <div id="result">YOUR PATH IS SEALED...</div>
-
+<!--please communicate what choice you have made, it is perminent for the real ARG-->
     <script>
         function makeChoice(choice) {
             document.body.style.backgroundColor = '#1a0000';
@@ -98,7 +98,7 @@
             const result = document.getElementById('result');
             result.style.display = 'block';
             
-            // Add dramatic effect
+
             document.body.style.animation = 'none';
             setTimeout(() => {
                 result.textContent += '\nTHE CONNECTION IS TERMINATING...';
@@ -107,7 +107,6 @@
                 }, 3000);
             }, 2000);
 
-            // Remove all event listeners after choice
             document.querySelectorAll('.choice').forEach(element => {
                 element.onclick = null;
             });
