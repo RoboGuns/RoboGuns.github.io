@@ -79,6 +79,7 @@
     .disabled-form {
       opacity: 0.5;
       pointer-events: none;
+      user-select: none; 
     }
   </style>
 </head>
@@ -156,7 +157,7 @@
       </form>
   
       <div id="message" class="message"></div>
-      <div id="timer" class="timer"></div> <!-- Timer element -->
+
     </div>
   </div>
   <script>
@@ -172,34 +173,28 @@
 
     function updateTimerDisplay() {
         const now = Date.now();
-        const nextSubmission = getNextSubmissionTime();
-        const remaining = nextSubmission - now;
+        const nextSubmissionTime = getNextSubmissionTime();
+        const timeLeft = nextSubmissionTime - now;
 
-        if (remaining > 0) {
-            // In cooldown period
-            quizForm.classList.add('disabled-form');
-            const minutes = Math.floor(remaining / 60000);
-            const seconds = Math.floor((remaining % 60000) / 1000).toString().padStart(2, '0');
-            timerElement.innerHTML = `⌛ Next submission available in ${minutes}:${seconds}`;
-            timerElement.classList.add('error');
+        if (timeLeft > 0) {
+            const minutes = Math.floor(timeLeft / 60000);
+            const seconds = Math.floor((timeLeft % 60000) / 1000);
+            timerElement.textContent = `Next submission available in ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
         } else {
-            // Ready for submission
+            timerElement.textContent = '';
+            clearInterval(updateInterval);
             quizForm.classList.remove('disabled-form');
-            timerElement.innerHTML = '✅ Submission available now!';
-            timerElement.classList.remove('error');
         }
     }
 
-    function startCooldown() {
-        const nextSubmission = Date.now() + COOLDOWN;
-        localStorage.setItem('nextSubmissionTime', nextSubmission);
-        updateTimerDisplay();
-    }
-
-    // Initial setup
+    // Replace the initial setup code with:
     document.addEventListener('DOMContentLoaded', () => {
         updateTimerDisplay();
         updateInterval = setInterval(updateTimerDisplay, 1000);
+        // Force disable form if cooldown is active on page load
+        if (getNextSubmissionTime() > Date.now()) {
+            quizForm.classList.add('disabled-form');
+        }
     });
 
     quizForm.addEventListener('submit', async (e) => {
@@ -252,5 +247,46 @@
         }
     });
   </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    const messageElement = document.querySelector(".message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch("/api/submit-quiz", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        // ... inside the submit event listener
+        if (result.success) {
+          messageElement.textContent = result.message; // Use the message from backend
+          messageElement.classList.remove('error');
+          startCooldown();
+        } else {
+          messageElement.textContent = result.message || "An error occurred.";
+          messageElement.classList.add('error');
+        }
+      } catch (error) {
+        messageElement.textContent = "An error occurred. Please try again.";
+        messageElement.classList.add('error');
+      }
+    });
+
+    function startCooldown() {
+      // Implement your cooldown logic here
+    }
+  });
+</script>
 </body>
 </html>
