@@ -80,7 +80,7 @@
             <label><input type="radio" name="q6" value="A"> A plague</label>
             <label><input type="radio" name="q6" value="B"> A monster</label>
             <label><input type="radio" name="q6" value="C"> A cancer</label>
-            <label><input type="radio" name="q6" value="D"> THe best thing ever</label>
+            <label><input type="radio" name="q6" value="D"> The best thing ever</label>
           </div>
         </div>
   
@@ -88,121 +88,100 @@
       </form>
   
       <div id="message" class="message"></div>
+      <div id="timer" class="timer"></div> <!-- Timer element -->
     </div>
   </div>
   <script>
     const quizForm = document.getElementById('quizForm');
     const messageElement = document.getElementById('message');
-
-    quizForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      // Gather answers
-      const answers = {
-        q1: quizForm.q1.value,
-        q2: quizForm.q2.value,
-        q3: quizForm.q3.value,
-        q4: quizForm.q4.value,
-        q5: quizForm.q5.value,
-        q6: quizForm.q6.value,
-      };
-
-      try {
-        // Send answers to the backend
-        const response = await fetch('https://roboguns-github-io.onrender.com/api/validate-quiz', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(answers),
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          messageElement.textContent = "Congratulations! You got all the answers correct!";
-          messageElement.classList.remove('error');
-        } else {
-          messageElement.textContent = data.message || "Some answers are incorrect. Try again!";
-          messageElement.classList.add('error');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        messageElement.textContent = "An error occurred. Please try again.";
-        messageElement.classList.add('error');
-      }
-    });
-  </script>
-  <script>
     const timerElement = document.getElementById('timer');
     let updateInterval;
+    const COOLDOWN = 600000; // 10 minutes in milliseconds
 
-    function calculateValidTimes() {
-      const now = new Date();
-      const currentMinutes = now.getMinutes();
-      const currentWindow = Math.floor(currentMinutes / 10) * 10;
-      
-      const windowStart = new Date(now);
-      windowStart.setMinutes(currentWindow, 0, 0);
-      
-      const windowEnd = new Date(windowStart);
-      windowEnd.setMinutes(windowStart.getMinutes() + 10);
-
-      return { now, windowStart, windowEnd };
+    function getNextSubmissionTime() {
+        return parseInt(localStorage.getItem('nextSubmissionTime') || 0);
     }
 
     function updateTimerDisplay() {
-      const { now, windowStart, windowEnd } = calculateValidTimes();
-      
-      if (now >= windowStart && now < windowEnd) {
-        // Active window
-        quizForm.classList.remove('disabled-form');
-        const timeLeft = windowEnd - now;
-        const minutes = Math.floor(timeLeft / 60000);
-        const seconds = Math.floor((timeLeft % 60000) / 1000).toString().padStart(2, '0');
-        timerElement.innerHTML = `⏳ Submission window open for ${minutes}:${seconds}<br>
-                                 Next window at ${formatNextWindow(windowEnd)}`;
-        timerElement.classList.remove('error');
-      } else {
-        // Inactive window
-        quizForm.classList.add('disabled-form');
-        const nextWindow = new Date(windowStart);
-        nextWindow.setMinutes(windowStart.getMinutes() + 10);
-        
-        const timeUntilNext = nextWindow - now;
-        const hours = nextWindow.getHours().toString().padStart(2, '0');
-        const minutes = nextWindow.getMinutes().toString().padStart(2, '0');
-        
-        timerElement.innerHTML = `⌛ Next submission window:<br>
-                                 <strong>${hours}:${minutes}</strong>`;
-        timerElement.classList.add('error');
-      }
+        const now = Date.now();
+        const nextSubmission = getNextSubmissionTime();
+        const remaining = nextSubmission - now;
+
+        if (remaining > 0) {
+            // In cooldown period
+            quizForm.classList.add('disabled-form');
+            const minutes = Math.floor(remaining / 60000);
+            const seconds = Math.floor((remaining % 60000) / 1000).toString().padStart(2, '0');
+            timerElement.innerHTML = `⌛ Next submission available in ${minutes}:${seconds}`;
+            timerElement.classList.add('error');
+        } else {
+            // Ready for submission
+            quizForm.classList.remove('disabled-form');
+            timerElement.innerHTML = '✅ Submission available now!';
+            timerElement.classList.remove('error');
+        }
     }
 
-    function formatNextWindow(date) {
-      return date.toLocaleTimeString([], { 
-        hour: '2-digit', 
-        minute: '2-digit',
-        hour12: true
-      }).toUpperCase();
+    function startCooldown() {
+        const nextSubmission = Date.now() + COOLDOWN;
+        localStorage.setItem('nextSubmissionTime', nextSubmission);
+        updateTimerDisplay();
     }
 
     // Initial setup
     document.addEventListener('DOMContentLoaded', () => {
-      updateTimerDisplay();
-      updateInterval = setInterval(updateTimerDisplay, 1000);
+        updateTimerDisplay();
+        updateInterval = setInterval(updateTimerDisplay, 1000);
     });
 
     quizForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const { now, windowStart, windowEnd } = calculateValidTimes();
+        e.preventDefault();
+        const now = Date.now();
+        const nextSubmission = getNextSubmissionTime();
 
-      if (now < windowStart || now >= windowEnd) {
-        alert('Submissions are only allowed during 10-minute windows!');
-        return;
-      }
+        if (now < nextSubmission) {
+            const remaining = Math.ceil((nextSubmission - now) / 1000);
+            alert(`Please wait ${remaining} seconds before submitting again`);
+            return;
+        }
 
-      // ... (rest of your existing submission code) ...
+        // Disable form immediately while processing
+        quizForm.classList.add('disabled-form');
+
+        // Gather answers
+        const answers = {
+            q1: quizForm.q1.value,
+            q2: quizForm.q2.value,
+            q3: quizForm.q3.value,
+            q4: quizForm.q4.value,
+            q5: quizForm.q5.value,
+            q6: quizForm.q6.value,
+        };
+
+        try {
+            const response = await fetch('https://roboguns-github-io.onrender.com/api/validate-quiz', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(answers),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                messageElement.textContent = "Congratulations! You got all the answers correct!";
+                messageElement.classList.remove('error');
+                startCooldown(); // Only start cooldown on success
+            } else {
+                messageElement.textContent = data.message || "Some answers are incorrect. Try again!";
+                messageElement.classList.add('error');
+                quizForm.classList.remove('disabled-form'); // Re-enable form on failure
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            messageElement.textContent = "An error occurred. Please try again.";
+            messageElement.classList.add('error');
+            quizForm.classList.remove('disabled-form'); // Re-enable form on error
+        }
     });
   </script>
 </body>
