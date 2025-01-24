@@ -180,21 +180,23 @@
             const minutes = Math.floor(timeLeft / 60000);
             const seconds = Math.floor((timeLeft % 60000) / 1000);
             timerElement.textContent = `Next submission available in ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            quizForm.classList.add('disabled-form');
         } else {
-            timerElement.textContent = '';
-            clearInterval(updateInterval);
+            timerElement.textContent = '✅ Ready to submit!';
             quizForm.classList.remove('disabled-form');
         }
     }
 
-    // Replace the initial setup code with:
-    document.addEventListener('DOMContentLoaded', () => {
+    function startCooldown() {
+        const nextSubmission = Date.now() + COOLDOWN;
+        localStorage.setItem('nextSubmissionTime', nextSubmission);
         updateTimerDisplay();
         updateInterval = setInterval(updateTimerDisplay, 1000);
-        // Force disable form if cooldown is active on page load
-        if (getNextSubmissionTime() > Date.now()) {
-            quizForm.classList.add('disabled-form');
-        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateTimerDisplay();
+        setInterval(updateTimerDisplay, 1000);
     });
 
     quizForm.addEventListener('submit', async (e) => {
@@ -208,10 +210,7 @@
             return;
         }
 
-        // Disable form immediately while processing
         quizForm.classList.add('disabled-form');
-
-        // Gather answers
         const answers = {
             q1: quizForm.q1.value,
             q2: quizForm.q2.value,
@@ -229,24 +228,23 @@
             });
 
             const data = await response.json();
+            messageElement.classList.remove('error');
 
             if (data.success) {
-                messageElement.textContent = "Congratulations! You got all the answers correct!";
-                messageElement.classList.remove('error');
-                startCooldown(); // Only start cooldown on success
+                messageElement.textContent = data.message; // Show secret code
+                startCooldown();
             } else {
-                messageElement.textContent = data.message || "Some answers are incorrect. Try again!";
+                messageElement.textContent = data.message;
                 messageElement.classList.add('error');
-                quizForm.classList.remove('disabled-form'); // Re-enable form on failure
+                quizForm.classList.remove('disabled-form');
             }
         } catch (error) {
-            console.error('Error:', error);
             messageElement.textContent = "An error occurred. Please try again.";
             messageElement.classList.add('error');
-            quizForm.classList.remove('disabled-form'); // Re-enable form on error
+            quizForm.classList.remove('disabled-form');
         }
     });
-  </script>
+</script>
   <script>
   document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("form");
