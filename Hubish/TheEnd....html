@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE FINAL CHOICE</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Arial Black', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .title {
+            font-size: 4vw;
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
+            margin-bottom: 10vh;
+            text-shadow: 0 0 10px #ff0000;
+            animation: glitch 1s infinite;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 5vh;
+        }
+
+        .choice {
+            font-size: 3vw;
+            cursor: pointer;
+            padding: 2vh 5vw;
+            border: 3px solid #ff0000;
+            transition: all 0.3s ease;
+            text-align: center;
+            background-color: rgba(255, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        .choice:hover {
+            background-color: rgba(255, 0, 0, 0.3);
+            transform: scale(1.1);
+            text-shadow: 0 0 20px #ff0000;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: -2px 0 red; }
+            25% { text-shadow: 2px 0 blue; }
+            50% { text-shadow: -2px -2px red; }
+            75% { text-shadow: 2px 2px blue; }
+            100% { text-shadow: -2px 0 red; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        #result {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5vw;
+            text-align: center;
+            color: #ff0000;
+            text-shadow: 0 0 30px #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">CHOOSE YOUR REALITY</div>
+    <div class="choices">
+        <div class="choice" onclick="makeChoice(1)">ASCEND TO TRANSCENDENCE</div>
+        <div class="choice" onclick="makeChoice(2)">EMBRACE THE VOID</div>
+        <div class="choice" onclick="makeChoice(3)">RETURN TO THE SIMULATION</div>
+    </div>
+    <div id="result">YOUR PATH IS SEALED...</div>
+
+    <script>
+        function makeChoice(choice) {
+            document.body.style.backgroundColor = '#1a0000';
+            document.querySelectorAll('.choice').forEach(element => {
+                element.style.display = 'none';
+            });
+            document.querySelector('.title').style.display = 'none';
+            
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+            
+            // Add dramatic effect
+            document.body.style.animation = 'none';
+            setTimeout(() => {
+                result.textContent += '\nTHE CONNECTION IS TERMINATING...';
+                setTimeout(() => {
+                    window.location.href = `/${choice}-finale`;
+                }, 3000);
+            }, 2000);
+
+            // Remove all event listeners after choice
+            document.querySelectorAll('.choice').forEach(element => {
+                element.onclick = null;
+            });
+        }
+    </script>
+</body>
+</html>

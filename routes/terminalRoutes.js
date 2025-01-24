@@ -53,10 +53,25 @@ function isAdmin(userId) {
 
 // Endpoint to handle terminal commands
 router.get('/terminal', (req, res) => {
-  const userId = req.session.userId || 'default'; // Get user ID from session
-  const command = req.query.command?.toUpperCase() || '';
+  const userId = req.query.userId || 'default'; // Mock user/session ID
+  const command = req.query.command?.toUpperCase() || ''; // Get the command from query params
 
-  console.log(`User ID: ${userId}, Command: ${command}`);
+  // Check if the user has pending confirmation for 'CONFIRM REBOOT'
+  if (command === 'CONFIRM REBOOT' && commandState[userId]?.pendingReboot) {
+    delete commandState[userId]; // Clear pending state
+    return res.json({ response: "Rebooting system... Error: Core files missing. Reboot failed." });
+  }
+
+  // Handle 'SYSTEM REBOOT' to set pending state
+  if (command === 'SYSTEM REBOOT') {
+    commandState[userId] = { pendingReboot: true };
+    return res.json({ response: loreCommands['SYSTEM REBOOT'] });
+  }
+
+  // Handle 'TWTSASIT' command to redirect to a new page
+  if (command === 'TWTSASIT') {
+    return res.json({ redirect: "https://newpage.example.com" });
+  }
 
   // Admin check
   if (adminCommands.includes(command) && !isAdmin(userId)) {
