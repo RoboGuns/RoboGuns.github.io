@@ -232,11 +232,14 @@
 
             if (data.success) {
                 messageElement.textContent = data.message; // Show secret code
-                startCooldown();
+                // Remove cooldown if previously set
+                localStorage.removeItem('nextSubmissionTime');
+                quizForm.classList.remove('disabled-form');
+                updateTimerDisplay();
             } else {
                 messageElement.textContent = data.message;
                 messageElement.classList.add('error');
-                quizForm.classList.remove('disabled-form');
+                startCooldown(); // Start cooldown only on wrong answers
             }
         } catch (error) {
             messageElement.textContent = "An error occurred. Please try again.";
@@ -244,47 +247,6 @@
             quizForm.classList.remove('disabled-form');
         }
     });
-</script>
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector("form");
-    const messageElement = document.querySelector(".message");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-
-      try {
-        const response = await fetch("/api/submit-quiz", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-
-        // ... inside the submit event listener
-        if (result.success) {
-          messageElement.textContent = result.message; // Use the message from backend
-          messageElement.classList.remove('error');
-          startCooldown();
-        } else {
-          messageElement.textContent = result.message || "An error occurred.";
-          messageElement.classList.add('error');
-        }
-      } catch (error) {
-        messageElement.textContent = "An error occurred. Please try again.";
-        messageElement.classList.add('error');
-      }
-    });
-
-    function startCooldown() {
-      // Implement your cooldown logic here
-    }
-  });
 </script>
 </body>
 </html>
