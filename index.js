@@ -29,10 +29,9 @@ app.use(cookieParser()); // Initialize cookie-parser
 app.use(session({
   secret: process.env.SESSION_SECRET || 'fallback-secret', // Always use environment variables
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
     secure: true, // Must be true for SameSite=None
-    httpOnly: true,
     sameSite: 'none', // Required for cross-origin cookies
     maxAge: 3600000 // 1 hour
   },
