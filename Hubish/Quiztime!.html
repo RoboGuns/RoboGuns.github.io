@@ -174,7 +174,7 @@
     const messageElement = document.getElementById('message');
     const timerElement = document.getElementById('timer');
     let updateInterval;
-    const COOLDOWN = 600000; // 10 minutes in milliseconds
+    const COOLDOWN = 600000; 
 
     function getNextSubmissionTime() {
         return parseInt(localStorage.getItem('nextSubmissionTime') || 0);
@@ -240,15 +240,15 @@
             messageElement.classList.remove('error');
 
             if (data.success) {
-                messageElement.textContent = data.message; // Show secret code
-                // Remove cooldown if previously set
+                messageElement.textContent = data.message; 
+  
                 localStorage.removeItem('nextSubmissionTime');
                 quizForm.classList.remove('disabled-form');
                 updateTimerDisplay();
             } else {
                 messageElement.textContent = data.message;
                 messageElement.classList.add('error');
-                startCooldown(); // Start cooldown only on wrong answers
+                startCooldown();
             }
         } catch (error) {
             messageElement.textContent = "An error occurred. Please try again.";
