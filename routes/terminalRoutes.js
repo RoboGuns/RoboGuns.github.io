@@ -11,6 +11,7 @@ const loreCommands = {
   'ACCESS FILE 003': "Error: File 003 corrupted. Data irretrievable. To attempt recovery, use 'RECOVER' command followed by file number.",
   'RECOVER 003': "File 003 recovery cannot be initiated. Please run the command again with proof of admin privileges.",
   'ADMIN RECOVER 003': "File 003 recovery initiated. File restored. 3 = WeShouldBeSharing",
+  'TWTSASIT' : "id dont say blah blah blah, blah blah blah",
   'ACCESS FILE 004': "File 004 unlocked. Subject: Hive. **Excerpt:** 'Sustained exposure to the neural network destabilizes core personality fragments, leading to a uniform behavior among all subjects.'",
   HELP: "This console grants access to fragments of Project Hive's records. Use commands to retrieve available files or investigate system logs. Type 'HELP' to display this message.",
   'LS': "Available files: FILE 001, FILE 002, FILE 004. Corrupted files: FILE 003. Enter 'ACCESS FILE <number>' to view details.",
@@ -70,7 +71,7 @@ router.get('/terminal', (req, res) => {
 
   // Handle 'TWTSASIT' command to redirect to a new page
   if (command === 'TWTSASIT') {
-    return res.json({ redirect: "https://newpage.example.com" });
+    return res.json({ redirect: "https://roboguns.github.io/Hubish/TheEnd....html" });
   }
 
   // Admin check
