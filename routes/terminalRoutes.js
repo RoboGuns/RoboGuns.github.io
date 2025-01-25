@@ -53,10 +53,10 @@ function isAdmin(userId) {
 }
 
 // Endpoint to handle terminal commands
-router.get('/terminal', (req, res) => {
-  const userId = req.query.userId || 'default'; // Mock user/session ID
-  const command = req.query.command?.toUpperCase() || ''; // Get the command from query params
-
+router.post('/terminal', (req, res) => {
+  const userId = req.session.userId || 'default';
+  const command = req.body.command?.toUpperCase() || '';
+  
   // Check if the user has pending confirmation for 'CONFIRM REBOOT'
   if (command === 'CONFIRM REBOOT' && commandState[userId]?.pendingReboot) {
     delete commandState[userId]; // Clear pending state

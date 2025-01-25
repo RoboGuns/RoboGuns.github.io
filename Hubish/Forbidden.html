@@ -142,9 +142,12 @@
           } else {
             // Handle other commands via the backend
             try {
-              const response = await fetch(`https://roboguns-github-io.onrender.com/api/terminal?command=${encodeURIComponent(command)}`, {
-                credentials: 'include' // ADD THIS LINE
-              });
+              const response = await fetch(`https://roboguns-github-io.onrender.com/api/terminal`, {
+  method: "POST", // Use POST to send data securely
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ command: command }),
+  credentials: 'include' // Send session cookie
+});
               const result = await response.json();
 
               const serverResponse = document.createElement("p");
