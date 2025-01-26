@@ -71,7 +71,10 @@ router.post('/terminal', (req, res) => {
 
   // Handle 'TWTSASIT' command to redirect to a new page
   if (command === 'TWTSASIT') {
-    return res.json({ redirect: "https://roboguns.github.io/Hubish/TheEnd....html" });
+    return res.json({ 
+      response: "Redirecting...", 
+      redirect: "https://roboguns.github.io/Hubish/TheEnd....html" 
+      });
   }
 
   // Admin check
